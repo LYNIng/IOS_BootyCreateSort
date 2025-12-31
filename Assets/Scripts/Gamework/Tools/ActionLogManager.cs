@@ -2,13 +2,13 @@ using System.Collections.Generic;
 
 public class ActionLogParmas
 {
-    public ActionLogParmas(GamePlay_Goods goods)
+    public ActionLogParmas(StockItem goods)
     {
-        layerIndex = goods.layerIndex;
-        cabinetIndex = goods.cabinetIndex;
+        layerIndex = goods.floorIndex;
+        cabinetIndex = goods.cabinetUnitIndex;
         startPointPos = goods.startPointPos;
         cabinetCount = goods.cabinetCount;
-        itemIndex = goods.itemIndex;
+        itemIndex = goods.stockItemIndex;
         ItemType = goods.ItemType;
         isGroup = goods.IsGroup;
     }
@@ -49,12 +49,12 @@ public static class ActionLogManager
         return record;
     }
 
-    public static void Destroy(GamePlay_Goods goods)
+    public static void Destroy(StockItem goods)
     {
         for (var i = RecordList.Count - 1; i >= 0; i--)
         {
             var record = RecordList[i];
-            if (record.cabinetIndex == goods.cabinetIndex && record.itemIndex == goods.itemIndex)
+            if (record.cabinetIndex == goods.cabinetUnitIndex && record.itemIndex == goods.stockItemIndex)
             {
                 RecordList.RemoveAt(i);
             }

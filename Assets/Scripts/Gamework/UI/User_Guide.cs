@@ -10,7 +10,7 @@ public class User_GuideParam : UIData
 {
     public int guideIDX;
     public Vector3 pos;
-    public GamePlay_Goods goods;
+    public StockItem goods;
 }
 
 [UISetting(UICanvasLayer.Overlay_Camera, backgroundMask: EBackgroundMask.Transparency, UIGroupTag: EUIGroupTag.GamePop)]
@@ -83,7 +83,7 @@ public partial class User_Guide : UIBase<User_GuideParam>
             btn.RegistBtnCallback(() =>
             {
                 AudioManager.AudioPlayer.Play(SoundName.UIClick);
-                GamePlay_ShelfGame.Instance.OnClickedGoods(Data.goods);
+                MiniGame.Instance.OnClickedGoods(Data.goods);
                 ExcuteInteraction();
             });
             InitFinger(fingerTrans, Data.goods.transform.position + new Vector3(1, 0, 0));
@@ -95,7 +95,7 @@ public partial class User_Guide : UIBase<User_GuideParam>
                 AudioManager.AudioPlayer.Play(SoundName.UIClick);
                 ExcuteInteraction();
             });
-            InitFinger(fingerTrans, GamePlay_Slots.Instance.unlockSeat.transform.position + new Vector3(-0.6f, 0), -1);
+            InitFinger(fingerTrans, AllocationSlot.Instance.unlockSeat.transform.position + new Vector3(-0.6f, 0), -1);
         }
         else if (index == 3)
         {

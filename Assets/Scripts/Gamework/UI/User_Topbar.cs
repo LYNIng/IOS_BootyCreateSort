@@ -60,7 +60,7 @@ public partial class User_Topbar : UIBase
         btnSetting.RegistBtnCallback(() =>
         {
             AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            UIManager.OpenUI<User_Settings>();
+            UIManager.OpenUI<PNL_Settings>();
         });
 
         btnBack.RegistBtnCallback(() =>

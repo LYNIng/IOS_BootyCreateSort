@@ -22,7 +22,7 @@ public partial class User_WithD : UIBase
         btnQuest.RegistBtnCallback(() =>
         {
             AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            UIManager.OpenUI<User_Policy>();
+            UIManager.OpenUI<PNL_GamePolicy>();
         });
     }
 }

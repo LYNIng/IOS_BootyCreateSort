@@ -44,6 +44,14 @@ public partial class GlobalSingleton : Singleton<GlobalSingleton>
 
     }
 
+    public static string LevelString
+    {
+        get
+        {
+            return (Level + 1).ToString();
+        }
+    }
+
     public static int RemoveTool
     {
         get
@@ -149,7 +157,7 @@ public partial class GlobalSingleton : Singleton<GlobalSingleton>
     {
         get
         {
-            return DataManager.GetDataByInt("GuideState", 0);
+            return DataManager.GetDataByInt("GuideState", 3);
         }
         set
         {
@@ -400,7 +408,7 @@ public partial class GlobalSingleton : Singleton<GlobalSingleton>
                 var resultSprite = await AssetsManager.AsyncLoadAsset<Sprite>("Sprites/Top/tb-jb.png");
                 await ExplodeFlyToEffect.PlayEffectByWorldPos(resultSprite,
                      flyCnt.HasValue ? flyCnt.Value : RandomHelp.RandomRange(3, 5),
-                        startPos.Value, CoinElement.Instance.imaIcon.transform.position,
+                        startPos.Value, TopCoinPart.Instance.imaIcon.transform.position,
                         UIManager.GetCanvasLayerTransform(UICanvasLayer.Overlay_Camera), () =>
                         {
                             AudioManager.AudioPlayer.PlayOneShot(SoundName.CA);
@@ -500,98 +508,96 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
     private static Dictionary<string, Sprite> spritesDict;
     private AssetsLoader<Sprite> itemAssetsLoader;
 
-    private static GameObjectPool layerGoPool;
-    private static GameObjectPool cabinetGoPool;
-    private static GameObjectPool goodsGoPool;
+    //private static GameObjectPool layerGoPool;
+    //private static GameObjectPool cabinetGoPool;
+    //private static GameObjectPool goodsGoPool;
 
-    public static ParticlePool trailParticlePool { get; private set; }
-    public static ParticlePool eliminateParticlePool { get; private set; }
-    public static ParticlePool hitBarParticlePool { get; private set; }
-
-
-    public static async Task<GameObject> SpawnLayer()
-    {
-        if (layerGoPool == null)
-        {
-            layerGoPool = new GameObjectPool("Prefabs/Game/Layer.prefab");
-            await layerGoPool.AsyncInit();
-        }
-        if (!layerGoPool.IsLoaded)
-            await layerGoPool.AsyncWaitLoaded();
+    //public static ParticlePool trailParticlePool { get; private set; }
+    //public static ParticlePool eliminateParticlePool { get; private set; }
+    //public static ParticlePool hitBarParticlePool { get; private set; }
 
 
-        return layerGoPool.Spawn();
-    }
+    //public static async Task<GameObject> SpawnLayer()
+    //{
+    //    if (layerGoPool == null)
+    //    {
+    //        layerGoPool = new GameObjectPool("Prefabs/Game/OneFloor.prefab");
+    //        await layerGoPool.AsyncInit();
+    //    }
+    //    if (!layerGoPool.IsLoaded)
+    //        await layerGoPool.AsyncWaitLoaded();
 
-    public static async Task<GameObject> SpawnCabinet()
-    {
-        if (cabinetGoPool == null)
-        {
-            cabinetGoPool = new GameObjectPool("Prefabs/Game/Cabinet.prefab");
-            await cabinetGoPool.AsyncInit();
-        }
 
-        if (!cabinetGoPool.IsLoaded)
-            await cabinetGoPool.AsyncWaitLoaded();
+    //    return layerGoPool.Spawn();
+    //}
 
-        return cabinetGoPool.Spawn();
+    //public static async Task<GameObject> SpawnCabinet()
+    //{
+    //    if (cabinetGoPool == null)
+    //    {
+    //        cabinetGoPool = new GameObjectPool("Prefabs/Game/CabinetUnit.prefab");
+    //        await cabinetGoPool.AsyncInit();
+    //    }
 
-    }
+    //    if (!cabinetGoPool.IsLoaded)
+    //        await cabinetGoPool.AsyncWaitLoaded();
 
-    public static async Task<GameObject> SpawnGoods()
-    {
-        if (goodsGoPool == null)
-        {
-            goodsGoPool = new GameObjectPool("Prefabs/Game/Goods.prefab");
-            await goodsGoPool.AsyncInit();
-        }
+    //    return cabinetGoPool.Spawn();
 
-        if (!goodsGoPool.IsLoaded)
-            await goodsGoPool.AsyncWaitLoaded();
+    //}
 
-        return goodsGoPool.Spawn();
+    //public static async Task<GameObject> SpawnGoods()
+    //{
+    //    if (goodsGoPool == null)
+    //    {
+    //        goodsGoPool = new GameObjectPool("Prefabs/Game/StockItem.prefab");
+    //        await goodsGoPool.AsyncInit();
+    //    }
 
-    }
+    //    if (!goodsGoPool.IsLoaded)
+    //        await goodsGoPool.AsyncWaitLoaded();
+
+    //    return goodsGoPool.Spawn();
+
+    //}
 
     public async Task<bool> AsyncInit()
     {
-        layerGoPool = new GameObjectPool("Prefabs/Game/Layer.prefab");
-        cabinetGoPool = new GameObjectPool("Prefabs/Game/Cabinet.prefab");
-        goodsGoPool = new GameObjectPool("Prefabs/Game/Goods.prefab");
+        //layerGoPool = new GameObjectPool("Prefabs/Game/Layer.prefab");
+        //cabinetGoPool = new GameObjectPool("Prefabs/Game/Cabinet.prefab");
+        //goodsGoPool = new GameObjectPool("Prefabs/Game/Goods.prefab");
 
-        trailParticlePool = new ParticlePool("Prefabs/Particles/FX_ParticleTrail_bubble.prefab");
-        eliminateParticlePool = new ParticlePool("Prefabs/Particles/Icon_Boom.prefab");
-        hitBarParticlePool = new ParticlePool("Prefabs/Particles/UIP_StunExplosion.prefab");
-
-
+        //trailParticlePool = new ParticlePool("Prefabs/Particles/FX_ParticleTrail_bubble.prefab");
+        //eliminateParticlePool = new ParticlePool("Prefabs/Particles/Icon_Boom.prefab");
+        //hitBarParticlePool = new ParticlePool("Prefabs/Particles/UIP_StunExplosion.prefab");
 
         spritesDict = new Dictionary<string, Sprite>();
         List<string> itemPaths = new List<string>();
-        itemPaths.Add("Sprites/GamePlay/Item/tb-1.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-2.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-3.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-4.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-5.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-6.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-7.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-8.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-9.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-10.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-11.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-12.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-13.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-14.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-15.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-16.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-17.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-18.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-19.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-20.png");
-        itemPaths.Add("Sprites/GamePlay/Item/tb-21.png");
+        itemPaths.Add("Sprites/GameContents/tb-1.png");
+        itemPaths.Add("Sprites/GameContents/tb-2.png");
+        itemPaths.Add("Sprites/GameContents/tb-3.png");
+        itemPaths.Add("Sprites/GameContents/tb-4.png");
+        itemPaths.Add("Sprites/GameContents/tb-5.png");
+        itemPaths.Add("Sprites/GameContents/tb-6.png");
+        itemPaths.Add("Sprites/GameContents/tb-7.png");
+        itemPaths.Add("Sprites/GameContents/tb-8.png");
+        itemPaths.Add("Sprites/GameContents/tb-9.png");
+        itemPaths.Add("Sprites/GameContents/tb-10.png");
+        itemPaths.Add("Sprites/GameContents/tb-11.png");
+        itemPaths.Add("Sprites/GameContents/tb-12.png");
+        itemPaths.Add("Sprites/GameContents/tb-13.png");
+        itemPaths.Add("Sprites/GameContents/tb-14.png");
+        itemPaths.Add("Sprites/GameContents/tb-15.png");
+        itemPaths.Add("Sprites/GameContents/tb-16.png");
+        itemPaths.Add("Sprites/GameContents/tb-17.png");
+        itemPaths.Add("Sprites/GameContents/tb-18.png");
+        itemPaths.Add("Sprites/GameContents/tb-19.png");
+        itemPaths.Add("Sprites/GameContents/tb-20.png");
+        itemPaths.Add("Sprites/GameContents/tb-21.png");
         if (AppExcuteFlagSettings.ToBFlag)
-            itemPaths.Add("Sprites/GamePlay/Item/tb-22.png");
+            itemPaths.Add("Sprites/GameContents/tb-22.png");
 
-        AssetsManager.LoadAsset<Sprite>("Sprites/GamePlay/Box/tb-hgxz.png", (resultSp) =>
+        AssetsManager.LoadAsset<Sprite>("Sprites/GameContents/tb-red.png", (resultSp) =>
         {
             spritesDict.Add(resultSp.name, resultSp);
         });
@@ -630,23 +636,23 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
         return false;
     }
 
-    public async Task<GameObject> SpawnLayerGo()
-    {
-        await Task.CompletedTask;
-        return layerGoPool.Spawn();
-    }
+    //public async Task<GameObject> SpawnLayerGo()
+    //{
+    //    await Task.CompletedTask;
+    //    return layerGoPool.Spawn();
+    //}
 
-    public async Task<GameObject> SpawnCabinetGo()
-    {
-        await Task.CompletedTask;
-        return cabinetGoPool.Spawn();
-    }
+    //public async Task<GameObject> SpawnCabinetGo()
+    //{
+    //    await Task.CompletedTask;
+    //    return cabinetGoPool.Spawn();
+    //}
 
-    public async Task<GameObject> SpawnGoodsGo()
-    {
-        await Task.CompletedTask;
-        return goodsGoPool.Spawn();
-    }
+    //public async Task<GameObject> SpawnGoodsGo()
+    //{
+    //    await Task.CompletedTask;
+    //    return goodsGoPool.Spawn();
+    //}
 
     //public static bool TryGetSuperCoinClaim(out ParticlePool resultPool)
     //{

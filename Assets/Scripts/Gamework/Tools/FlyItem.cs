@@ -97,7 +97,7 @@ public class FlyItem : MonoBehaviour
     {
 
         var value = RandomHelp.RandomRange(1000, 1501);
-        var ui = await UIManager.OpenUIAsync<User_SuperCoinClaim>(new User_SuperCoinClaimParam
+        var ui = await UIManager.OpenUIAsync<PNL_ClaimPop>(new PNL_ClaimPopParam
         {
             reward = value
         });
