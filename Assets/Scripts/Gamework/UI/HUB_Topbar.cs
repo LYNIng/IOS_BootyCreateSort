@@ -6,12 +6,12 @@ using UnityEngine;
 
 [PreloadAssets(
     new object[] {
-        "Prefabs/UIComp/SuperCoinElement.prefab" },
-    "Prefabs/UIComp/CoinElement.prefab",
-    "Prefabs/UIComp/LevelElement.prefab"
+        "Prefabs/UIComp/TopSuperCoinPart.prefab" },
+    "Prefabs/UIComp/TopCoinPart.prefab",
+    "Prefabs/UIComp/TopLevelPart.prefab"
     )]
 [UISetting(UICanvasLayer.Overlay_Camera)]
-public partial class User_Topbar : UIBase
+public partial class HUB_Topbar : UIBase
 {
     protected override async Task Show_Internal()
     {
@@ -31,22 +31,22 @@ public partial class User_Topbar : UIBase
 
         if (AppExcuteFlagSettings.ToBFlag)
         {
-            if (TryGetPreloadAsset("SuperCoinElement", out GameObject result))
+            if (TryGetPreloadAsset("TopSuperCoinPart", out GameObject result))
             {
                 result.SpawnNewOne(rtElements).SetActive(true);
             }
-            if (TryGetPreloadAsset("CoinElement", out result))
+            if (TryGetPreloadAsset("TopCoinPart", out result))
             {
                 result.SpawnNewOne(rtElements).SetActive(true);
             }
         }
         else
         {
-            if (TryGetPreloadAsset("CoinElement", out GameObject result))
+            if (TryGetPreloadAsset("TopCoinPart", out GameObject result))
             {
                 result.SpawnNewOne(rtElements).SetActive(true);
             }
-            if (TryGetPreloadAsset("LevelElement", out result))
+            if (TryGetPreloadAsset("TopLevelPart", out result))
             {
                 result.SpawnNewOne(rtElements).SetActive(true);
             }

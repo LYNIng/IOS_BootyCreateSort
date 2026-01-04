@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [UISetting(UICanvasLayer.Popup_Camera, backgroundMask: EBackgroundMask.Black_80F | EBackgroundMask.CloseUIOnCancelClick | EBackgroundMask.CloseUIOnBackGroundClick, UIGroupTag: EUIGroupTag.GamePop)]
-public partial class User_WithD : UIBase
+public partial class PNL_TX : UIBase
 {
     protected override void OnShowed()
     {

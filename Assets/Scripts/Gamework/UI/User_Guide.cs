@@ -111,7 +111,7 @@ public partial class User_Guide : UIBase<User_GuideParam>
             btnCa.RegistBtnCallback(() =>
             {
                 AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-                UIManager.OpenUI<User_WithD>();
+                UIManager.OpenUI<PNL_TX>();
                 ExcuteInteraction();
             });
             InitFinger(fingerTrans, btnCa.transform.position + new Vector3(0, -1, 0));

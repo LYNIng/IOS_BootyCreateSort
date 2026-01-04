@@ -4,7 +4,7 @@ public class ActionLogParmas
 {
     public ActionLogParmas(StockItem goods)
     {
-        layerIndex = goods.floorIndex;
+        layerIndex = goods.layerIndex;
         cabinetIndex = goods.cabinetUnitIndex;
         startPointPos = goods.startPointPos;
         cabinetCount = goods.cabinetCount;

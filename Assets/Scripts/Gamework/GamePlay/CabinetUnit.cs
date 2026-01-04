@@ -24,7 +24,7 @@ public class CabinetUnit : MonoBehaviour
 
     public bool IsItemGroup { get; private set; } = false;
 
-    public int oneFloorIndex;
+    public int oneLayerIndex;
     public int cabinetUnitIndex;
     public int beginPos;
     public int cabinetUnitCount;
@@ -43,7 +43,7 @@ public class CabinetUnit : MonoBehaviour
 
     public void InitData(OneFloor floor, int cabinetUnitIndex, int beginPos, int cabinetUnitCount, bool isGroup)
     {
-        oneFloorIndex = floor.OneFloorIndex;
+        oneLayerIndex = floor.OneFloorIndex;
         this.cabinetUnitIndex = cabinetUnitIndex;
         this.beginPos = beginPos;
         this.cabinetUnitCount = cabinetUnitCount;

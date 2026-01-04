@@ -1,5 +1,5 @@
 ﻿//===================================================
-// 创建时间：2025-12-22 11:37:30
+// 创建时间：2026-01-04 11:31:28
 // 备    注：此代码为工具生成 请勿手工修改
 //===================================================
 
@@ -8,12 +8,12 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// User_WithD
+/// PNL_RemoveADs
 /// </summary>
-public partial class User_WithD : UIBase
+public partial class PNL_RemoveADs : UIBase
 {
 
-    public const string UIName = "User_WithD";
+    public const string UIName = "PNL_RemoveADs";
 
     /// <summary>
     /// 
@@ -23,11 +23,16 @@ public partial class User_WithD : UIBase
     /// <summary>
     /// 
     /// </summary>
-    public Button btnQuest;
+    public Button btnClick;
 
     /// <summary>
     /// 
     /// </summary>
-    public Button btnClick;
+    public TextMeshProUGUI txtHaveADs;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public TextMeshProUGUI txtNeedADs;
 
 }

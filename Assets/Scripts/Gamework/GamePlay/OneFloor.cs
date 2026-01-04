@@ -37,7 +37,7 @@ public class OneFloor : MonoBehaviour
     #region Row相关操作
 
     // 根据范围去随机填充货柜
-    public void FillFloor(List<OneFloor> rows, int min, int max, bool hasGroup)
+    public void FillLayer(List<OneFloor> rows, int min, int max, bool hasGroup)
     {
         //int loop = isMax ? 100 : 10;
         //Debug.Log($"{minCapacity} - {maxCapacity}");
@@ -129,7 +129,7 @@ public class OneFloor : MonoBehaviour
     }
 
     // 指定大小去填充货柜
-    public void FillFloor(List<OneFloor> rows, int capacity, bool isGroup)
+    public void FillLayer(List<OneFloor> rows, int capacity, bool isGroup)
     {
         CreateBox(rows, 0, capacity, isGroup);
     }
@@ -141,10 +141,10 @@ public class OneFloor : MonoBehaviour
     // 添加货柜
     public void AddBox(CabinetUnit targetBox)
     {
-        targetBox.oneFloorIndex = OneFloorIndex;
+        targetBox.oneLayerIndex = OneFloorIndex;
         foreach (var item in targetBox.items)
         {
-            item.floorIndex = OneFloorIndex;
+            item.layerIndex = OneFloorIndex;
         }
         targetBox.transform.SetParent(transform);
         targetBox.transform.DOKill();

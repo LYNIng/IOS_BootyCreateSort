@@ -1,5 +1,5 @@
 ﻿//===================================================
-// 创建时间：2025-12-18 16:51:37
+// 创建时间：2026-01-04 10:54:50
 // 备    注：此代码为工具生成 请勿手工修改
 //===================================================
 
@@ -8,26 +8,31 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// User_Topbar
+/// CMP_SigninItem
 /// </summary>
-public partial class User_Topbar : UIBase
+public partial class CMP_SigninItem : MonoComposite
 {
 
-    public const string UIName = "User_Topbar";
+    public const string UIName = "CMP_SigninItem";
 
     /// <summary>
     /// 
     /// </summary>
-    public Button btnSetting;
+    public Image imaGreen;
 
     /// <summary>
     /// 
     /// </summary>
-    public Button btnBack;
+    public Image imaGrey;
 
     /// <summary>
     /// 
     /// </summary>
-    public RectTransform rtElements;
+    public Image imaRed;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Button btnClick;
 
 }

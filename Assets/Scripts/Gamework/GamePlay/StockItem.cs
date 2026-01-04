@@ -16,7 +16,7 @@ public class StockItem : MonoBehaviour
     /// <summary>
     /// floorId
     /// </summary>
-    public int floorIndex;
+    public int layerIndex;
     /// <summary>
     /// boxId
     /// </summary>
@@ -73,12 +73,12 @@ public class StockItem : MonoBehaviour
 
     private void RefreshName()
     {
-        name = $"layer:{floorIndex},cIndex:{cabinetUnitIndex},sPos:{startPointPos},count:{cabinetCount},item:{this.stockItemIndex}";
+        name = $"layer:{layerIndex},cIndex:{cabinetUnitIndex},sPos:{startPointPos},count:{cabinetCount},item:{this.stockItemIndex}";
     }
 
     public void CallInit(CabinetUnit cabinet, int stockItemIndex)
     {
-        floorIndex = cabinet.oneFloorIndex;
+        layerIndex = cabinet.oneLayerIndex;
         cabinetUnitIndex = cabinet.cabinetUnitIndex;
         startPointPos = cabinet.beginPos;
         cabinetCount = cabinet.cabinetUnitCount;
@@ -218,7 +218,7 @@ public class StockItem : MonoBehaviour
         else
         {
             var item = Instantiate(stockItemPrefab, transform, false);
-            item.floorIndex = floorIndex;
+            item.layerIndex = layerIndex;
             item.cabinetUnitIndex = cabinetUnitIndex;
             item.startPointPos = startPointPos;
             item.cabinetCount = cabinetCount;

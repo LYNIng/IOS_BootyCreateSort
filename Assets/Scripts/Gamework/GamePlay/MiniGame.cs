@@ -33,11 +33,11 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
         slots.InitData();
         //propsLogic.ResetProp();
         ActionLogManager.CallInit();
-        storage.CleanFloor();
+        storage.CleanLayer();
         storage.InitData();
         GlobalSingleton.CurCount = 0;
         GlobalSingleton.MaxCount = storage.GetVol();
-        UIManager.OpenUI<User_Topbar>();
+        UIManager.OpenUI<HUB_Topbar>();
 
         await Task.Delay(500);
         //await Task.Delay(2000);

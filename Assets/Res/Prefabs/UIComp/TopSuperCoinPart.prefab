@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Cash
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 8acba767fd3b0374ab8c0bae8ab4e54d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 69ea393c3b5f5614ba4437ca24b5ddeb, type: 2}
+  m_sharedMaterial: {fileID: -4454680709928534672, guid: 69ea393c3b5f5614ba4437ca24b5ddeb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5077,7 +5077,7 @@ GameObject:
   - component: {fileID: 990337619712217885}
   - component: {fileID: 5019619601628347956}
   m_Layer: 5
-  m_Name: SuperCoinElement
+  m_Name: TopSuperCoinPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5283,8 +5283,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: $41.9
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
-  m_sharedMaterial: {fileID: -211510374770390252, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 69ea393c3b5f5614ba4437ca24b5ddeb, type: 2}
+  m_sharedMaterial: {fileID: -4454680709928534672, guid: 69ea393c3b5f5614ba4437ca24b5ddeb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -41,11 +41,11 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         //imaInvenBg.rectTransform.sizeDelta = new Vector2(Screen.width, 4000);
     }
 
-    public void CleanFloor()
+    public void CleanLayer()
     {
-        foreach (var floor in _layerList)
+        foreach (var layer in _layerList)
         {
-            Destroy(floor.gameObject);
+            Destroy(layer.gameObject);
         }
 
         _layerList.Clear();
@@ -63,14 +63,14 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         Sid = 0;
         var minVolume = GlobalSingleton.GetCanbinetMinLength();
         var maxVolume = GlobalSingleton.GetCanbinetMaxLength();
-        var floorCount = GlobalSingleton.GetLayerCountMax();
+        var layerCount = GlobalSingleton.GetLayerCountMax();
 
-        var overGroupFloor = RandomHelp.RandomPointByLenght(floorCount, GlobalSingleton.GetOverlayInterval());
+        var overGroupLayer = RandomHelp.RandomPointByLenght(layerCount, GlobalSingleton.GetOverlayInterval());
 
-        for (var i = 0; i < floorCount; i++)
+        for (var i = 0; i < layerCount; i++)
         {
-            var floor = SpawnFloor();
-            floor.FillFloor(_layerList, minVolume, maxVolume, overGroupFloor.Contains(i));
+            var layer = SpawnLayer();
+            layer.FillLayer(_layerList, minVolume, maxVolume, overGroupLayer.Contains(i));
         }
 
         var itemVolume = GetVol();
@@ -78,8 +78,8 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         // 确保货栈容量是3的倍数
         if (itemVolume % 3 != 0)
         {
-            var row = SpawnFloor();
-            row.FillFloor(_layerList, 3 - itemVolume % 3 + 3, false);
+            var row = SpawnLayer();
+            row.FillLayer(_layerList, 3 - itemVolume % 3 + 3, false);
             // 更新Items
         }
 
@@ -191,27 +191,27 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         //});
     }
 
-    private void LogList(List<int> list)
-    {
-        Dictionary<int, int> dict = new Dictionary<int, int>();
-        for (int i = 0; i < list.Count; i++)
-        {
-            var idx = list[i];
-            if (dict.ContainsKey(list[i]))
-            {
-                dict[list[i]]++;
-            }
-            else
-            {
-                dict[list[i]] = 1;
-            }
-        }
+    //private void LogList(List<int> list)
+    //{
+    //    Dictionary<int, int> dict = new Dictionary<int, int>();
+    //    for (int i = 0; i < list.Count; i++)
+    //    {
+    //        var idx = list[i];
+    //        if (dict.ContainsKey(list[i]))
+    //        {
+    //            dict[list[i]]++;
+    //        }
+    //        else
+    //        {
+    //            dict[list[i]] = 1;
+    //        }
+    //    }
 
-        foreach (var kvp in dict)
-        {
-            Debug.Log($"Random Item id : {kvp.Key} -> count : {kvp.Value}");
-        }
-    }
+    //    foreach (var kvp in dict)
+    //    {
+    //        Debug.Log($"Random Item id : {kvp.Key} -> count : {kvp.Value}");
+    //    }
+    //}
 
     public bool IsEmpty()
     {
@@ -221,9 +221,9 @@ public class StorageUnit : MonoSingleton<StorageUnit>
     public int GetVol()
     {
         var result = 0;
-        foreach (var floor in _layerList)
+        foreach (var layer in _layerList)
         {
-            foreach (var shelf in floor.CabinetUnitList)
+            foreach (var shelf in layer.CabinetUnitList)
             {
                 if (!shelf.IsItemGroup)
                     result += shelf.cabinetUnitCount;
@@ -250,19 +250,19 @@ public class StorageUnit : MonoSingleton<StorageUnit>
     #region Row相关操作
 
     // 创建货柜行
-    private OneFloor SpawnFloor()
+    private OneFloor SpawnLayer()
     {
-        var floor = Instantiate(OneFloorPrefab, transform, false);
-        floor.InitData(_layerList.Count);
-        _layerList.Add(floor);
-        return floor;
+        var layer = Instantiate(OneFloorPrefab, transform, false);
+        layer.InitData(_layerList.Count);
+        _layerList.Add(layer);
+        return layer;
     }
 
     // 删除货柜行
-    private void DestroyFloor(int floorIndex)
+    private void DestroyLayer(int floorIndex)
     {
         // 遍历下移的元素，row全部 -1
-        var rowCount = GetActiveFloorCount();
+        var rowCount = GetActiveLayerCount();
         for (var i = floorIndex; i < rowCount; i++)
         {
             var row = _layerList[i];
@@ -270,7 +270,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
             for (var j = dropRow.CabinetUnitList.Count - 1; j >= 0; j--)
             {
                 var shelf = dropRow.CabinetUnitList[j];
-                shelf.oneFloorIndex -= 1;
+                shelf.oneLayerIndex -= 1;
                 dropRow.RemoveBox(shelf);
                 row.AddBox(shelf);
             }
@@ -278,23 +278,23 @@ public class StorageUnit : MonoSingleton<StorageUnit>
     }
 
     // 获得有货柜的行数
-    private int GetActiveFloorCount()
+    private int GetActiveLayerCount()
     {
         return _layerList.Count(row => row.CabinetUnitList.Count > 0);
     }
 
     // 遍历检查行是否有改变
-    private void LoopCheckFloor()
+    private void LoopCheckLayer()
     {
         var loopMax = 200;
         var isLoop = true;
         while (isLoop && loopMax > 0)
         {
             var isChange = false;
-            var rowCount = GetActiveFloorCount();
+            var rowCount = GetActiveLayerCount();
             for (var i = 0; i < rowCount; i++)
             {
-                if (CheckFloorChanged(i))
+                if (CheckLayerChanged(i))
                 {
                     isChange = true;
                     break;
@@ -305,21 +305,21 @@ public class StorageUnit : MonoSingleton<StorageUnit>
             if (!isChange) isLoop = false;
         }
 
-        InfiniteFloor();
+        SpawnInfiniteLayer();
     }
 
     // 检查行是否有改变
-    private bool CheckFloorChanged(int floorIndex)
+    private bool CheckLayerChanged(int layerIndex)
     {
         // 到顶了，不用判断
-        var floorCount = GetActiveFloorCount();
-        if (floorIndex >= floorCount) return false;
+        var layerCount = GetActiveLayerCount();
+        if (layerIndex >= layerCount) return false;
 
-        var row = _layerList[floorIndex];
+        var row = _layerList[layerIndex];
         // 整一层空了,删除整一层
         if (row.CabinetUnitList.Count <= 0)
         {
-            DestroyFloor(floorIndex);
+            DestroyLayer(layerIndex);
             return true;
         }
         else if (row.CabinetUnitList.Count != transform.childCount)
@@ -343,31 +343,31 @@ public class StorageUnit : MonoSingleton<StorageUnit>
 
 
         // 最底下，不用判断能否掉下去
-        if (floorIndex <= 0) return false;
+        if (layerIndex <= 0) return false;
         var isRemove = false;
         for (var i = row.CabinetUnitList.Count - 1; i >= 0; i--)
         {
             var shelve = row.CabinetUnitList[i];
-            var can = _layerList[floorIndex - 1].CanAddBox(shelve.beginPos, shelve.cabinetUnitCount);
+            var can = _layerList[layerIndex - 1].CanAddBox(shelve.beginPos, shelve.cabinetUnitCount);
             // 不能就插入就判断下一个
             if (!can) continue;
 
             // 能插入，货柜就要掉一层
             isRemove = true;
-            _layerList[floorIndex].RemoveBox(shelve);
-            _layerList[floorIndex - 1].AddBox(shelve);
+            _layerList[layerIndex].RemoveBox(shelve);
+            _layerList[layerIndex - 1].AddBox(shelve);
         }
 
         return isRemove;
     }
 
     // 无限关
-    private void InfiniteFloor()
+    private void SpawnInfiniteLayer()
     {
         // 小于5关不开启
         if (GlobalSingleton.Level < 4) return;
-        var floorCount = GetActiveFloorCount();
-        var needAddRowCount = GlobalSingleton.GetLayerCountMax() - floorCount;
+        var layerCount = GetActiveLayerCount();
+        var needAddRowCount = GlobalSingleton.GetLayerCountMax() - layerCount;
         if (needAddRowCount <= 0) return;
 
         // 添加n个空的Row
@@ -376,8 +376,8 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         var maxVolume = GlobalSingleton.GetCanbinetMinLength();
         for (var i = 0; i < needAddRowCount; i++)
         {
-            var row = SpawnFloor();
-            row.FillFloor(_layerList, minVolume, maxVolume, false);
+            var row = SpawnLayer();
+            row.FillLayer(_layerList, minVolume, maxVolume, false);
         }
 
         var objects = GetGoodsItems();
@@ -398,10 +398,10 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         }
 
         //ClearEmptyFloor();
-        ClearEmptyFloor();
+        ClearEmptyLayer();
     }
 
-    private void ClearEmptyFloor()
+    private void ClearEmptyLayer()
     {
         List<CabinetUnit> boxs = new List<CabinetUnit>();
         foreach (var row in _layerList)
@@ -416,7 +416,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         for (int i = 0; i < boxs.Count; i++)
         {
             var targetBox = boxs[i];
-            var row = _layerList[targetBox.oneFloorIndex];
+            var row = _layerList[targetBox.oneLayerIndex];
             row.RemoveBox(targetBox);
         }
 
@@ -429,7 +429,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
     // 删除Shelf，后续会触发Row元素排序
     public void RemoveBox(CabinetUnit targetBox)
     {
-        var row = _layerList[targetBox.oneFloorIndex];
+        var row = _layerList[targetBox.oneLayerIndex];
         row.RemoveBox(targetBox);
 
         //TODO 箱子炸裂特效
@@ -439,7 +439,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         AudioManager.AudioPlayer.PlayOneShot(SoundName.BoxElimination);
         Destroy(targetBox.gameObject);
 
-        LoopCheckFloor();
+        LoopCheckLayer();
     }
 
     #endregion
@@ -559,7 +559,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         {
             // 从仓库移除item
             goods.btnClick.interactable = false;
-            var row = _layerList[goods.floorIndex];
+            var row = _layerList[goods.layerIndex];
             var shelf = row.GetBox(goods.cabinetUnitIndex);
             shelf.RemoveStockItem(goods);
             return (shelf, goods);
@@ -567,7 +567,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         else
         {
             var tmpGoods = goods.PopGoods();
-            var row = _layerList[goods.floorIndex];
+            var row = _layerList[goods.layerIndex];
             var shelf = row.GetBox(goods.cabinetUnitIndex);
             shelf.OnGroupItemPop();
             tmpGoods.btnClick.interactable = false;
@@ -592,11 +592,11 @@ public class StorageUnit : MonoSingleton<StorageUnit>
             box = row.CreateBox(recordParmas);
             box.AddStockItem(recordParmas);
 
-            box.oneFloorIndex -= 1;
+            box.oneLayerIndex -= 1;
             var result = new List<CabinetUnit> { box };
             var nextCollideShelves = new List<CabinetUnit> { box };
-            var rowCount = GetActiveFloorCount();
-            for (var i = box.oneFloorIndex + 1; i < rowCount; i++)
+            var rowCount = GetActiveLayerCount();
+            for (var i = box.oneLayerIndex + 1; i < rowCount; i++)
             {
                 if (nextCollideShelves.Count <= 0) break;
                 // 临时结果
@@ -605,7 +605,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
                 foreach (var ncs in nextCollideShelves)
                 {
                     var collideShelves =
-                        _layerList[ncs.oneFloorIndex + 1].GetCollideShelves(ncs.beginPos, ncs.cabinetUnitCount);
+                        _layerList[ncs.oneLayerIndex + 1].GetCollideShelves(ncs.beginPos, ncs.cabinetUnitCount);
                     foreach (var collideShelf in collideShelves)
                     {
                         tempShelves[collideShelf.cabinetUnitIndex] = collideShelf;
@@ -624,9 +624,9 @@ public class StorageUnit : MonoSingleton<StorageUnit>
             for (var i = result.Count - 1; i >= 0; i--)
             {
                 var s = result[i];
-                if (s.oneFloorIndex >= 0) _layerList[s.oneFloorIndex].RemoveBox(s);
-                if (s.oneFloorIndex + 1 >= _layerList.Count) SpawnFloor();
-                _layerList[s.oneFloorIndex + 1].AddBox(s);
+                if (s.oneLayerIndex >= 0) _layerList[s.oneLayerIndex].RemoveBox(s);
+                if (s.oneLayerIndex + 1 >= _layerList.Count) SpawnLayer();
+                _layerList[s.oneLayerIndex + 1].AddBox(s);
             }
         }
     }

@@ -26,7 +26,7 @@ public partial class User_Tasks : UIBase, IMsgObj
     {
         base.OnInit();
 
-        if (UIManager.TryGetUI(out User_Topbar bar))
+        if (UIManager.TryGetUI(out HUB_Topbar bar))
         {
             bar.ShowBackTopBar(() =>
             {
@@ -40,7 +40,7 @@ public partial class User_Tasks : UIBase, IMsgObj
 
     protected override void OnHideBefore()
     {
-        if (UIManager.TryGetUI(out User_Topbar bar))
+        if (UIManager.TryGetUI(out HUB_Topbar bar))
         {
             bar.ShowNormalTopBar();
         }

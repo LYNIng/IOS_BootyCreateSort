@@ -18,7 +18,7 @@ public partial class SuperCoinElement : MonoCompositeSingleton<SuperCoinElement>
         btnCa.RegistBtnCallback(() =>
         {
             AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            UIManager.OpenUI<User_WithD>();
+            UIManager.OpenUI<PNL_TX>();
         });
     }
 
