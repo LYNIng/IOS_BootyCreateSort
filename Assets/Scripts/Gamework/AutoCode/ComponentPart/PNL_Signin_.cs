@@ -1,5 +1,5 @@
 ﻿//===================================================
-// 创建时间：2025-12-21 21:11:36
+// 创建时间：2026-01-05 13:54:56
 // 备    注：此代码为工具生成 请勿手工修改
 //===================================================
 
@@ -8,16 +8,16 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// User_Tasks
+/// PNL_Signin
 /// </summary>
-public partial class User_Tasks : UIBase
+public partial class PNL_Signin : UIBase
 {
 
-    public const string UIName = "User_Tasks";
+    public const string UIName = "PNL_Signin";
 
     /// <summary>
     /// 
     /// </summary>
-    public RectTransform rtTaskContent;
+    public Button btnClose;
 
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [UISetting(UICanvasLayer.Popup_Camera,
@@ -7,46 +8,63 @@ using UnityEngine;
     UIGroupTag: EUIGroupTag.GamePop)]
 public partial class PNL_OpenShop : UIBase
 {
+    public Transform[] itemArray;
+
+
+    private int[] costValueArr = { 100, 150, 200 };
+
+    public int CurCostCnt
+    {
+        get
+        {
+            return DataManager.GetDataByInt("ShopCostCnt", 0);
+        }
+        set
+        {
+            DataManager.SetDataByInt("ShopCostCnt", value);
+        }
+    }
+
+    public override void OnInit()
+    {
+        RefreshShow();
+    }
+
     protected override void OnShowed()
     {
-        btnBuyClick1.RegistBtnCallback(async () =>
-        {
-            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            if (GlobalSingleton.Coin >= 200)
-            {
-                await GlobalSingleton.CostAsset(GameAssetType.Coin, 200);
-
-                GlobalSingleton.GetReward(GameAssetType.RemoveTool, 2);
-                GlobalSingleton.GetReward(GameAssetType.BackTool, 2);
-                GlobalSingleton.GetReward(GameAssetType.RefreshTool, 2);
-            }
-            else
-            {
-                UIManager.ShowToast(1001.ToMultiLanguageText());
-            }
-        });
-
-        btnBuyClick2.RegistBtnCallback(async () =>
-        {
-            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            if (GlobalSingleton.Coin >= 300)
-            {
-                await GlobalSingleton.CostAsset(GameAssetType.Coin, 300);
-
-                GlobalSingleton.GetReward(GameAssetType.RemoveTool, 3);
-                GlobalSingleton.GetReward(GameAssetType.BackTool, 3);
-                GlobalSingleton.GetReward(GameAssetType.RefreshTool, 3);
-            }
-            else
-            {
-                UIManager.ShowToast(1001.ToMultiLanguageText());
-            }
-        });
 
         btnClose.RegistBtnCallback(() =>
         {
             AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
             Close();
         });
+
+        btnBuyClick.RegistBtnCallback(() =>
+        {
+            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+
+        });
+    }
+
+    private void RefreshShow()
+    {
+        var idx = CurCostCnt;
+        if (idx >= CurCostCnt) return;
+        for (int i = 0; i < itemArray.Length; ++i)
+        {
+            var item = itemArray[i];
+            var txt = item.Find("Items/Price/txtPrice").GetComponent<TextMeshProUGUI>();
+            if (idx > i)
+                txt.text = "Sell Out";
+            else txt.text = costValueArr[i].ToString();
+
+            item.Find("Shelf_1").gameObject.SetActive(idx != i);
+            item.Find("Shelf_2").gameObject.SetActive(idx == i);
+
+        }
+
+        var rootTrans = itemArray[idx];
+        txtValue.text = costValueArr[idx].ToString();
+
     }
 }

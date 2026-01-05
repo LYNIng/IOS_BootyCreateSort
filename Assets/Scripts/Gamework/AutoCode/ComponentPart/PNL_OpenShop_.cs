@@ -1,5 +1,5 @@
 ﻿//===================================================
-// 创建时间：2025-12-19 14:28:15
+// 创建时间：2026-01-05 11:43:25
 // 备    注：此代码为工具生成 请勿手工修改
 //===================================================
 
@@ -8,12 +8,12 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// User_Shop
+/// PNL_OpenShop
 /// </summary>
 public partial class PNL_OpenShop : UIBase
 {
 
-    public const string UIName = "User_Shop";
+    public const string UIName = "PNL_OpenShop";
 
     /// <summary>
     /// 
@@ -23,11 +23,11 @@ public partial class PNL_OpenShop : UIBase
     /// <summary>
     /// 
     /// </summary>
-    public Button btnBuyClick1;
+    public Button btnBuyClick;
 
     /// <summary>
     /// 
     /// </summary>
-    public Button btnBuyClick2;
+    public TextMeshProUGUI txtValue;
 
 }

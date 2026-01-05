@@ -717,6 +717,13 @@ public static class ImageUtil
 
         return go.GetComponent<Image>();
     }
+
+    public static Image SetSprite(this Image ima, Sprite sprite)
+    {
+        ima.sprite = sprite;
+        return ima;
+    }
+
 }
 
 public static class ListUtil

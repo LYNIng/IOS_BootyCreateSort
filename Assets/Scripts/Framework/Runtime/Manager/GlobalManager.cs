@@ -304,7 +304,7 @@ public partial class GlobalSingleton : Singleton<GlobalSingleton>
 
     public static int CaItemType()
     {
-        return 22;
+        return 21;
     }
     /// <summary>
     /// item组的数量
@@ -405,7 +405,7 @@ public partial class GlobalSingleton : Singleton<GlobalSingleton>
             if (startPos.HasValue)
             {
                 AudioManager.AudioPlayer.PlayOneShot(SoundName.RewardPop);
-                var resultSprite = await AssetsManager.AsyncLoadAsset<Sprite>("Sprites/Top/tb-jb.png");
+                var resultSprite = await AssetsManager.AsyncLoadAsset<Sprite>("Sprites/MainGamePlay/tb-coin.png");
                 await ExplodeFlyToEffect.PlayEffectByWorldPos(resultSprite,
                      flyCnt.HasValue ? flyCnt.Value : RandomHelp.RandomRange(3, 5),
                         startPos.Value, TopCoinPart.Instance.imaIcon.transform.position,
@@ -430,7 +430,7 @@ public partial class GlobalSingleton : Singleton<GlobalSingleton>
             if (startPos.HasValue)
             {
                 AudioManager.AudioPlayer.PlayOneShot(SoundName.CA);
-                var resultSprite = await AssetsManager.AsyncLoadAsset<Sprite>("Sprites/Top/tb-mj.png");
+                var resultSprite = await AssetsManager.AsyncLoadAsset<Sprite>("Sprites/MainGamePlay/tb-mj.png");
                 await ExplodeFlyToEffect.PlayEffectByWorldPos(resultSprite,
                     flyCnt.HasValue ? flyCnt.Value : RandomHelp.RandomRange(3, 5),
                     startPos.Value, SuperCoinElement.Instance.imaIcon.transform.position,
@@ -593,9 +593,9 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
         itemPaths.Add("Sprites/GameContents/tb-18.png");
         itemPaths.Add("Sprites/GameContents/tb-19.png");
         itemPaths.Add("Sprites/GameContents/tb-20.png");
-        itemPaths.Add("Sprites/GameContents/tb-21.png");
+        //itemPaths.Add("Sprites/GameContents/tb-21.png");
         if (AppExcuteFlagSettings.ToBFlag)
-            itemPaths.Add("Sprites/GameContents/tb-22.png");
+            itemPaths.Add("Sprites/GameContents/tb-21.png");
 
         AssetsManager.LoadAsset<Sprite>("Sprites/GameContents/tb-red.png", (resultSp) =>
         {

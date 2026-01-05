@@ -5,6 +5,65 @@ using UnityEngine.Events;
 
 public static class ShowADManager
 {
+    public static bool HasLastTime
+    {
+        get
+        {
+            return DataManager.HasKey("LastRemoveADs");
+        }
+    }
+
+    public static DateTime LastDateTime
+    {
+        get
+        {
+            var tmp = DataManager.GetDataByString("LastRemoveADs");
+            return DateTime.Parse(tmp);
+        }
+        set
+        {
+            var tmp = LastDateTime.ToString();
+            DataManager.SetDataByString("LastRemoveADs", tmp);
+        }
+    }
+
+    public static int ShowADCount
+    {
+        get
+        {
+            return DataManager.GetDataByInt("ShowADCount", 0);
+        }
+        set
+        {
+            DataManager.SetDataByInt("ShowADCount", value);
+        }
+    }
+
+    public static bool IsSkipAD
+    {
+        get
+        {
+            if (HasLastTime)
+            {
+                return false;
+            }
+            var lastTime = LastDateTime;
+            DateTime dateTime = DateTime.UtcNow;
+
+            return false;
+        }
+    }
+
+    public static bool PlusPlayADCount()
+    {
+        ShowADCount++;
+        if (ShowADCount >= 15)
+        {
+            return true;
+        }
+        return false;
+    }
+
     // private static DateTime? lastPlayInterstADTime;
     // private const int InterstADSpan = 8;
     public static void PlayInterstAD(string adTag, Action<int, string> callback)

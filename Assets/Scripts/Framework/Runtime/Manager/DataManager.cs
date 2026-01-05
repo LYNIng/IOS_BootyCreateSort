@@ -12,6 +12,10 @@ public static class DataManager
     {
         return PlayerPrefs.GetInt(key, defaultValue ? 1 : 0) == 1;
     }
+    public static bool HasKey(string key)
+    {
+        return PlayerPrefs.HasKey(key);
+    }
     public static int GetDataByInt(string key, int value = 0)
     {
         return PlayerPrefs.GetInt(key, value);
@@ -41,6 +45,6 @@ public static class DataManager
         PlayerPrefs.SetString(key, value);
     }
 
-    
+
 
 }

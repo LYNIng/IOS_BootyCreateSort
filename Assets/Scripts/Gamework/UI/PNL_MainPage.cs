@@ -24,10 +24,10 @@ public partial class PNL_MainPage : UIBase
             this.SendCommand((ushort)GameEvent.GamePlay_Begin);
         });
 
-        btnTask.RegistBtnCallback(() =>
+        btnSignin.RegistBtnCallback(() =>
         {
             AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            UIManager.OpenUI<User_Tasks>();
+            UIManager.OpenUI<PNL_Signin>();
         });
 
         btnShop.RegistBtnCallback(() =>

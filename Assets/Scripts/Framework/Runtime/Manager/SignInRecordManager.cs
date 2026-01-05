@@ -40,8 +40,9 @@ public partial class GlobalSingleton
         (GameAssetType.Coin,500),//5
         (GameAssetType.Coin,1000),//6
 
-        (GameAssetType.RemoveTool,3),//7-1
+        (GameAssetType.Coin,3),//7-1
         (GameAssetType.BackTool,3),//7-2
+        (GameAssetType.RefreshTool,3),//7-3
         (GameAssetType.RefreshTool,3),//7-3
 
     };
@@ -55,8 +56,9 @@ public partial class GlobalSingleton
         (GameAssetType.Coin,500),//5
         (GameAssetType.Coin,1000),//6
 
-        (GameAssetType.RemoveTool,3),//7-1
+        (GameAssetType.Coin,3),//7-1
         (GameAssetType.BackTool, 3),//7-2
+        (GameAssetType.RefreshTool,3),//7-3
         (GameAssetType.RefreshTool,3),//7-3
 
 };
