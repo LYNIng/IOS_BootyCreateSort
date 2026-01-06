@@ -1439,7 +1439,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 5.1299973}
+  m_AnchoredPosition: {x: 0, y: 5.130005}
   m_SizeDelta: {x: 0, y: -10.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3008287141858641910
@@ -1470,10 +1470,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Play
+  m_text: Start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 8acba767fd3b0374ab8c0bae8ab4e54d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 69ea393c3b5f5614ba4437ca24b5ddeb, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 0cdb387721790a7498511b69d7c2d8ce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2747,7 +2747,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 185}
-  m_SizeDelta: {x: 501, y: 160}
+  m_SizeDelta: {x: 641, y: 249}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7314276025146077514
 CanvasRenderer:
@@ -2777,7 +2777,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 09c8f1b62a4d32e4d800da6ef9cc81e3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 57c717f7c8d3c8f4a81661d9c5a3f7af, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

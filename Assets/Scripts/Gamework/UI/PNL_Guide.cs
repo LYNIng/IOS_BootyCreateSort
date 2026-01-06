@@ -100,7 +100,7 @@ public partial class PNL_Guide : UIBase<PNL_GuideParam>
         else if (index == 3)
         {
 
-            AssetLoader<Sprite> loader = new AssetLoader<Sprite>("Sprites/Top/tb-mj.png");
+            AssetLoader<Sprite> loader = new AssetLoader<Sprite>("Sprites/MainGamePlay/tb-mj.png");
             await loader.AsyncLoad();
 
             imaGuide3Icon.sprite = loader.Asset;
