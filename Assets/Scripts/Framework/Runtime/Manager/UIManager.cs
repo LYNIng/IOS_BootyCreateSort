@@ -76,6 +76,8 @@ public enum EUIGroupTag
     None,
 
     GamePop = 0x1,
+
+    HomePage = 0x1 << 1
 }
 
 [AttributeUsage(AttributeTargets.Class)]
@@ -341,6 +343,9 @@ public abstract class UIBase : MonoComposite
             && imaMask != null)
         {
             var btnMask = imaMask.GetOrAddComponent<Button>();
+            var colorBlock = btnMask.colors;
+            colorBlock.pressedColor = colorBlock.normalColor;
+            btnMask.colors = colorBlock;
             btnMask.RegistBtnCallback(() =>
             {
                 AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);

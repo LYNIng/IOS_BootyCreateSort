@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[UISetting(UICanvasLayer.Popup_Camera,
+    backgroundMask: EBackgroundMask.Black_80F | EBackgroundMask.CloseUIOnCancelClick | EBackgroundMask.CloseUIOnBackGroundClick)]
 public partial class PNL_RemoveADs : UIBase
 {
 
@@ -11,8 +14,7 @@ public partial class PNL_RemoveADs : UIBase
     {
         base.OnInit();
 
-
-
+        RefreshShow();
     }
 
     protected override void OnShowed()
@@ -35,6 +37,12 @@ public partial class PNL_RemoveADs : UIBase
                 else
                     RefreshShow();
             });
+        });
+
+        btnClose.RegistBtnCallback(() =>
+        {
+            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+            Close();
         });
     }
 

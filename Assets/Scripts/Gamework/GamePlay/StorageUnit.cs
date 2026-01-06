@@ -9,36 +9,17 @@ using UnityEngine.UI;
 public class StorageUnit : MonoSingleton<StorageUnit>
 {
     public OneFloor OneFloorPrefab;
-    //public SkeletonGraphic boxEffect;
     public Transform transStorageTop;
     public Transform transStorageBottom;
-    //public Image imaInvenBg;
-    //public Transform snowSkeletonPos;
-    //public SkeletonGraphic snowSkeleton;
-
-    //public ParticleSystem magicDustParticle;
 
     // 货柜会掉落到其他行，要确保索引唯一
-    public static int Sid;
+    public static int GlobalLayerID;
     private readonly List<OneFloor> _layerList = new();
     public List<StockItem> guideTempGoodsList { get; set; } = new();
-
-
-    private void Awake()
-    {
-
-    }
 
     private void OnDestroy()
     {
         transform.DOKill();
-    }
-
-    private void Start()
-    {
-        //magicDustParticle.Play();
-        //snowSkeleton.transform.position = snowSkeletonPos.position;
-        //imaInvenBg.rectTransform.sizeDelta = new Vector2(Screen.width, 4000);
     }
 
     public void CleanLayer()
@@ -60,7 +41,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
 
         _layerList.Clear();
 
-        Sid = 0;
+        GlobalLayerID = 0;
         var minVolume = GlobalSingleton.GetCanbinetMinLength();
         var maxVolume = GlobalSingleton.GetCanbinetMaxLength();
         var layerCount = GlobalSingleton.GetLayerCountMax();
@@ -361,6 +342,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         return isRemove;
     }
 
+    int InfiniteFloorCount = 0;
     // 无限关
     private void SpawnInfiniteLayer()
     {
@@ -371,7 +353,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         if (needAddRowCount <= 0) return;
 
         // 添加n个空的Row
-        var itemsVolume = GetVol();
+        var itemsVolume = GetGoodsItems().Count;
         var minVolume = GlobalSingleton.GetCanbinetMinLength();
         var maxVolume = GlobalSingleton.GetCanbinetMinLength();
         for (var i = 0; i < needAddRowCount; i++)
@@ -384,7 +366,10 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         var items = objects.GetRange(itemsVolume, objects.Count - itemsVolume);
         //Debug.Log($"=====> objects : {objects.Count} | items : {items.Count}");
 
+        var plusCount = InfiniteFloorCount / 16;
         var typeCount = GlobalSingleton.GetGoodsTypeCount();
+        var afterCount = typeCount + plusCount;
+        typeCount = Mathf.Clamp(afterCount, typeCount, afterCount);
         foreach (var item in items)
         {
             var type = Random.Range(1, typeCount);

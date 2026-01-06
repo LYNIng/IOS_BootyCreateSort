@@ -22,7 +22,7 @@ public static class ShowADManager
         }
         set
         {
-            var tmp = LastDateTime.ToString();
+            var tmp = value.ToString();
             DataManager.SetDataByString("LastRemoveADs", tmp);
         }
     }
@@ -43,22 +43,46 @@ public static class ShowADManager
     {
         get
         {
-            if (HasLastTime)
+            if (!HasLastTime)
             {
                 return false;
             }
-            var lastTime = LastDateTime;
-            DateTime dateTime = DateTime.UtcNow;
+
+            RefreshSkipADTime();
+
+            if (ShowADCount >= 15)
+            {
+                return true;
+            }
 
             return false;
         }
     }
 
+    private static void RefreshSkipADTime()
+    {
+        var lastTime = LastDateTime;
+
+        var span = DateTime.UtcNow - lastTime;
+        if (span.Hours >= 24)
+        {
+            ShowADCount = 0;
+            LastDateTime = DateTime.UtcNow;
+        }
+
+    }
+
     public static bool PlusPlayADCount()
     {
         ShowADCount++;
+        if (!HasLastTime)
+        {
+            LastDateTime = DateTime.UtcNow;
+        }
+
         if (ShowADCount >= 15)
         {
+            MessageDispatch.CallMessageCommand((ushort)GameEvent.RefreshADFREE);
             return true;
         }
         return false;
@@ -68,26 +92,14 @@ public static class ShowADManager
     // private const int InterstADSpan = 8;
     public static void PlayInterstAD(string adTag, Action<int, string> callback)
     {
+        if (IsSkipAD)
+        {
+            callback?.Invoke(0, "SkipAD");
+            return;
+        }
+
         //MaxManager.Instance.ShowInterstitial(callback);
-        //         if (lastPlayInterstADTime.HasValue)
-        //         {
-        //             var sec = (DateTime.UtcNow - lastPlayInterstADTime.Value).TotalSeconds;
-        //
-        //             if (sec < InterstADSpan)
-        //             {
-        //                 callback?.Invoke(999, $"not ready ");
-        //                 return;
-        //             }
-        //
-        //         }
-        //         lastPlayInterstADTime = DateTime.UtcNow;
-        //
-        //         if (!AppExcuteFlagSettings.ToAFlag)
-        //         {
-        //             callback?.Invoke(0, null);
-        //             return;
-        //         }
-        //
+
         UIManager.OpenUI<UIADTest>(new UIADTestParam { mADTag = adTag, mADT = "Interstitial Ad", onResult = callback });
         // #if UNITY_EDITOR
         // #else
@@ -97,6 +109,11 @@ public static class ShowADManager
 
     public static void PlayVideoAD(string adTag, Action<int, string> callback)
     {
+        if (IsSkipAD)
+        {
+            callback?.Invoke(0, "SkipAD");
+            return;
+        }
         //MaxManager.Instance.ShowRewardedAd(callback);
         //         if (!AppExcuteFlagSettings.ToAFlag)
         //         {

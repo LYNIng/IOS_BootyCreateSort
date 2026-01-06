@@ -37,7 +37,7 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
         storage.InitData();
         GlobalSingleton.CurCount = 0;
         GlobalSingleton.MaxCount = storage.GetVol();
-        UIManager.OpenUI<HUB_Topbar>();
+
 
         await Task.Delay(500);
         //await Task.Delay(2000);
@@ -112,8 +112,12 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
             // 胜利
             slots.CallStopAllAnim();
 
-            var ui = await UIManager.OpenUIAsync<PNL_RateUs>();
-            await ui.WaitClose();
+
+            if (!string.IsNullOrEmpty(AppExcuteFlagSettings.RateURL) && GlobalSingleton.Level == 2)
+            {
+                var ui = await UIManager.OpenUIAsync<PNL_RateUs>();
+                await ui.WaitClose();
+            }
 
             this.SendCommand((ushort)GameEvent.GameSuccess);
 
@@ -348,17 +352,17 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
             {
 
                 //飞行粒子效果
-            //    var tmp = GlobalAssetSingleton.trailParticlePool.Spawn(true, (resultGO) =>
-            //{
-            //    resultGO.SetActive(false);
-            //    resultGO.transform.SetParent(parent);
-            //    resultGO.transform.position = new Vector3(startPos.x, startPos.y, user_GamePlay.transform.position.z);
+                //    var tmp = GlobalAssetSingleton.trailParticlePool.Spawn(true, (resultGO) =>
+                //{
+                //    resultGO.SetActive(false);
+                //    resultGO.transform.SetParent(parent);
+                //    resultGO.transform.position = new Vector3(startPos.x, startPos.y, user_GamePlay.transform.position.z);
 
-            //});
+                //});
 
 
 
-            //    tmp.transform.DoSinLerpMove(user_GamePlay.fillAmount.transform.position, 1f, RandomHelp.RandomRange(-4, 4));
+                //    tmp.transform.DoSinLerpMove(user_GamePlay.fillAmount.transform.position, 1f, RandomHelp.RandomRange(-4, 4));
 
                 //Debug.Log($"startPos={startPos}, barPos={barLogic.amountPos}");
             }

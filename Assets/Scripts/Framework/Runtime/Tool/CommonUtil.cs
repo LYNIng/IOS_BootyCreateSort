@@ -509,22 +509,12 @@ public static class TransformUtil
             action?.Invoke(target);
         });
     }
-    public static void ClickScaleAni(this Transform target, Action<Transform> action, float durationScale = 1f)
+    public static void ClickScaleAni(this Transform target, Action<Transform> action, float durationScale = 1f, float intensity = 1f)
     {
         var comp = target.gameObject.GetOrAddComponent<ButtonEx>();
-        target.ClickScaleAni((setV) => comp.IsClicked = setV, () => comp.IsClicked, (target) => { action?.Invoke(target); }, durationScale);
-        //Sequence seq = DOTween.Sequence();
-        //Vector3 orgScale = target.localScale;
-        //seq.Append(target.DOScale(Vector3.Scale(orgScale, new Vector3(1.2f, 0.8f, 1f)), 0.05f).SetEase(Ease.InCubic).SetUpdate(true));
-        //seq.Append(target.DOScale(Vector3.Scale(orgScale, new Vector3(0.8f, 1.2f, 1f)), 0.1f).SetEase(Ease.InCubic).SetUpdate(true));
-        //seq.Append(target.DOScale(orgScale, 0.05f).SetEase(Ease.OutCubic).SetUpdate(true));
-
-        //seq.OnComplete(() =>
-        //{
-        //    action?.Invoke(target);
-        //});
+        target.ClickScaleAni((setV) => comp.IsClicked = setV, () => comp.IsClicked, (target) => { action?.Invoke(target); }, durationScale, intensity);
     }
-    public static void ClickScaleAni(this Transform target, Action<bool> switchSet, Func<bool> switchGet, Action<Transform> action, float durationScale = 1f)
+    public static void ClickScaleAni(this Transform target, Action<bool> switchSet, Func<bool> switchGet, Action<Transform> action, float durationScale = 1f, float intensity = 1f)
     {
         var m_ClickAni = switchGet != null ? switchGet.Invoke() : false;
         if (m_ClickAni) return;
@@ -532,8 +522,9 @@ public static class TransformUtil
 
         Sequence seq = DOTween.Sequence();
         Vector3 orgScale = target.localScale;
-        seq.Append(target.DOScale(Vector3.Scale(orgScale, new Vector3(1.2f, 0.8f, 1f)), 0.05f * durationScale).SetEase(Ease.InCubic).SetUpdate(true));
-        seq.Append(target.DOScale(Vector3.Scale(orgScale, new Vector3(0.8f, 1.2f, 1f)), 0.1f * durationScale).SetEase(Ease.InCubic).SetUpdate(true));
+        float offset = 0.2f * intensity;
+        seq.Append(target.DOScale(Vector3.Scale(orgScale, new Vector3(1f + offset, 1f - offset, 1f)), 0.05f * durationScale).SetEase(Ease.InCubic).SetUpdate(true));
+        seq.Append(target.DOScale(Vector3.Scale(orgScale, new Vector3(1f - offset, 1f + offset, 1f)), 0.1f * durationScale).SetEase(Ease.InCubic).SetUpdate(true));
         seq.Append(target.DOScale(orgScale, 0.05f * durationScale).SetEase(Ease.OutCubic).SetUpdate(true));
 
         seq.OnComplete(() =>
@@ -628,6 +619,12 @@ public static class TransformUtil
     public static T GetOrAddComponent<T>(this Transform go) where T : Component
     {
         return go?.gameObject.GetOrAddComponent<T>();
+    }
+
+    public static Transform SetActive(this Transform target, bool flag)
+    {
+        target.gameObject.SetActive(flag);
+        return target;
     }
 }
 

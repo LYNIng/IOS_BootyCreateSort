@@ -1,5 +1,5 @@
 ﻿//===================================================
-// 创建时间：2026-01-05 11:43:25
+// 创建时间：2026-01-06 11:35:30
 // 备    注：此代码为工具生成 请勿手工修改
 //===================================================
 
@@ -18,12 +18,27 @@ public partial class PNL_OpenShop : UIBase
     /// <summary>
     /// 
     /// </summary>
-    public Button btnClose;
+    public Button btnSelect1;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Button btnSelect2;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Button btnSelect3;
 
     /// <summary>
     /// 
     /// </summary>
     public Button btnBuyClick;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Button btnClose;
 
     /// <summary>
     /// 

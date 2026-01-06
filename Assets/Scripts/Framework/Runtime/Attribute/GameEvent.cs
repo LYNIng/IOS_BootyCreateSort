@@ -24,6 +24,8 @@ public enum GameEvent : ushort
     UnlockNewSpace,//解锁额外位
     ResetNewSpace,//重置额外位
 
+    RefreshADFREE,
+
     ShowBackHomeButtom,
     HideBackHomeButtom,
 

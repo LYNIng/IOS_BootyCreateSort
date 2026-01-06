@@ -10,24 +10,23 @@ public partial class PNL_OpenShop : UIBase
 {
     public Transform[] itemArray;
 
-
     private int[] costValueArr = { 100, 150, 200 };
 
-    public int CurCostCnt
+    private int lastSelectIDX
     {
         get
         {
-            return DataManager.GetDataByInt("ShopCostCnt", 0);
+            return DataManager.GetDataByInt("lastSelectIDX", 0);
         }
         set
         {
-            DataManager.SetDataByInt("ShopCostCnt", value);
+            DataManager.SetDataByInt("lastSelectIDX", value);
         }
     }
 
     public override void OnInit()
     {
-        RefreshShow();
+        ShowIDX(lastSelectIDX);
     }
 
     protected override void OnShowed()
@@ -42,28 +41,62 @@ public partial class PNL_OpenShop : UIBase
         btnBuyClick.RegistBtnCallback(() =>
         {
             AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+            CallBuy();
+        });
 
+        btnSelect1.RegistBtnCallback(() =>
+        {
+            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+            SelectItem(0);
+        });
+        btnSelect2.RegistBtnCallback(() =>
+        {
+            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+            SelectItem(1);
+        });
+        btnSelect3.RegistBtnCallback(() =>
+        {
+            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+            SelectItem(2);
         });
     }
 
-    private void RefreshShow()
+    private void SelectItem(int idx)
     {
-        var idx = CurCostCnt;
-        if (idx >= CurCostCnt) return;
-        for (int i = 0; i < itemArray.Length; ++i)
+        HideIDX(lastSelectIDX);
+        ShowIDX(idx);
+    }
+
+    private void CallBuy()
+    {
+        var cost = costValueArr[lastSelectIDX];
+        if (GlobalSingleton.Coin >= cost)
         {
-            var item = itemArray[i];
-            var txt = item.Find("Items/Price/txtPrice").GetComponent<TextMeshProUGUI>();
-            if (idx > i)
-                txt.text = "Sell Out";
-            else txt.text = costValueArr[i].ToString();
-
-            item.Find("Shelf_1").gameObject.SetActive(idx != i);
-            item.Find("Shelf_2").gameObject.SetActive(idx == i);
-
+            _ = GlobalSingleton.CostAsset(GameAssetType.Coin, cost);
         }
+        else
+        {
+            UIManager.ShowToast(1001.ToMultiLanguageText());
+        }
+    }
 
-        var rootTrans = itemArray[idx];
+    private void HideIDX(int idx)
+    {
+        var item = itemArray[idx];
+
+        item.Find("Shelf_1").gameObject.SetActive(true);
+        item.Find("Shelf_2").gameObject.SetActive(false);
+
+    }
+
+    private void ShowIDX(int idx)
+    {
+        lastSelectIDX = idx;
+        var item = itemArray[idx];
+
+        item.Find("Shelf_1").SetActive(false);
+        item.Find("Shelf_2").SetActive(true);
+        item.ClickScaleAni(null, intensity: 0.5f);
         txtValue.text = costValueArr[idx].ToString();
 
     }

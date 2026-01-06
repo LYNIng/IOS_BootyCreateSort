@@ -191,7 +191,7 @@ public class OneFloor : MonoBehaviour
 
 
         var shelf = Instantiate(cabinetUnitPrefab, row.transform, false);
-        shelf.InitData(row, StorageUnit.Sid++, startPoint, capacity, isGroup);
+        shelf.InitData(row, StorageUnit.GlobalLayerID++, startPoint, capacity, isGroup);
         row.CabinetUnitList.Add(shelf);
     }
 

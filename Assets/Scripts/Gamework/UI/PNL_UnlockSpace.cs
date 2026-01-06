@@ -64,5 +64,20 @@ public partial class PNL_UnlockSpace : UIBase
                 UIManager.ShowToast(1001.ToMultiLanguageText());
             }
         });
+
+
+        btnADClick.RegistBtnCallback(() =>
+        {
+            ShowADManager.PlayVideoAD("User_NewSpace", (code, msg) =>
+            {
+                if (code > 0)
+                {
+                    UIManager.ShowToast(msg);
+                    return;
+                }
+                this.SendCommand((ushort)GameEvent.UnlockNewSpace);
+                Close();
+            });
+        });
     }
 }

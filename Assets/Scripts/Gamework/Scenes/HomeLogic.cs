@@ -11,11 +11,6 @@ public class HomeLogic : MonoSingleton<HomeLogic>
 
     public override bool DontDestory => false;
 
-    //private void Awake()
-    //{
-
-    //}
-
     private async void Start()
     {
         try
@@ -58,8 +53,9 @@ public class GamePlay : Singleton<GamePlay>, IMsgObj
         IsGamePlayStart = false;
         ShowHomePage();
         await UIManager.OpenMultiUIAsync(
-            //typeof(User_Topbar),
+            typeof(PNL_MainPage_Top),
             typeof(PNL_MainPage));
+
 
         if (GlobalSingleton.GuideState == 0)
         {
@@ -97,12 +93,13 @@ public class GamePlay : Singleton<GamePlay>, IMsgObj
         var loadingUI = await UIManager.OpenUIAsync<PNL_Loading>();
 
         ShowGamePage();
-        await UIManager.CloseUIAsync<PNL_MainPage>();
+        await UIManager.CloseMultiUIAsyncByUIGroupTag(EUIGroupTag.HomePage);
 
         await MiniGame.Instance.InitData(GlobalSingleton.Level);
-        await UIManager.OpenUIAsync<HUB_MainGamePlay>();
 
         await loadingUI.AsyncClose();
+
+        await UIManager.OpenMultiUIAsync(typeof(HUB_Topbar), typeof(HUB_MainGamePlay));
 
         this.SendCommand((ushort)GameEvent.RefreshProgressBar);
         if (GlobalSingleton.GuideState == 1)
@@ -170,19 +167,21 @@ public class GamePlay : Singleton<GamePlay>, IMsgObj
 
         await loadingUI.AsyncClose();
 
-        UIManager.OpenUI<PNL_MainPage>();
+        await UIManager.OpenMultiUIAsync(
+            typeof(PNL_MainPage_Top),
+            typeof(PNL_MainPage));
 
 
     }
 
-    [CmdCallback((ushort)GameEvent.GamePlay_LevelComplete)]
-    private async Task OnGamePlay_LevelComplete()
-    {
-        GlobalSingleton.Level++;
-        var ui = await UIManager.OpenUIAsync<PNL_Loading>();
-        //await GamePlay_ShelfGame.Instance.BuildGameLevel();
-        await Task.Delay(600);
-        await ui.AsyncClose();
-        //await GamePlay_ShelfGame.Instance.StartGameLevel();
-    }
+    //[CmdCallback((ushort)GameEvent.GamePlay_LevelComplete)]
+    //private async Task OnGamePlay_LevelComplete()
+    //{
+    //    GlobalSingleton.Level++;
+    //    var ui = await UIManager.OpenUIAsync<PNL_Loading>();
+    //    //await GamePlay_ShelfGame.Instance.BuildGameLevel();
+    //    await Task.Delay(600);
+    //    await ui.AsyncClose();
+    //    //await GamePlay_ShelfGame.Instance.StartGameLevel();
+    //}
 }

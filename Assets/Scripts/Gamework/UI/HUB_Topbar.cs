@@ -10,7 +10,7 @@ using UnityEngine;
     "Prefabs/UIComp/TopCoinPart.prefab",
     "Prefabs/UIComp/TopLevelPart.prefab"
     )]
-[UISetting(UICanvasLayer.Overlay_Camera)]
+[UISetting(UICanvasLayer.Overlay_Camera, UIGroupTag: EUIGroupTag.GamePop)]
 public partial class HUB_Topbar : UIBase
 {
     protected override async Task Show_Internal()
