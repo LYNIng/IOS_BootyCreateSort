@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [UISetting(UICanvasLayer.Overlay_Camera, backgroundMask: EBackgroundMask.Black_80F)]
-public partial class User_TakeGuide : UIBase
+public partial class PNL_SuperGuide : UIBase
 {
     protected override void OnShowed()
     {

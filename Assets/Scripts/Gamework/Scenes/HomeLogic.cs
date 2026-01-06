@@ -61,13 +61,13 @@ public class GamePlay : Singleton<GamePlay>, IMsgObj
         {
             if (AppExcuteFlagSettings.ToBFlag)
             {
-                var takeUI = await UIManager.OpenUIAsync<User_TakeGuide>();
+                var takeUI = await UIManager.OpenUIAsync<PNL_SuperGuide>();
                 await takeUI.WaitClose();
             }
 
             GlobalSingleton.GuideState = 1;
 
-            var ui = await UIManager.OpenUIAsync<User_Guide>(new User_GuideParam { guideIDX = 0 });
+            var ui = await UIManager.OpenUIAsync<PNL_Guide>(new PNL_GuideParam { guideIDX = 0 });
             await ui.WaitInteraction();
             ui.Close();
         }
@@ -104,14 +104,14 @@ public class GamePlay : Singleton<GamePlay>, IMsgObj
         this.SendCommand((ushort)GameEvent.RefreshProgressBar);
         if (GlobalSingleton.GuideState == 1)
         {
-            var guideUI = await UIManager.OpenUIAsync<User_Guide>(new User_GuideParam
+            var guideUI = await UIManager.OpenUIAsync<PNL_Guide>(new PNL_GuideParam
             {
                 guideIDX = 1,
                 goods = StorageUnit.Instance.guideTempGoodsList[0]
             });
             await guideUI.WaitInteraction();
 
-            guideUI.ReplaceData(new User_GuideParam
+            guideUI.ReplaceData(new PNL_GuideParam
             {
                 guideIDX = 1,
                 goods = StorageUnit.Instance.guideTempGoodsList[1]
@@ -119,7 +119,7 @@ public class GamePlay : Singleton<GamePlay>, IMsgObj
 
 
             await guideUI.WaitInteraction();
-            guideUI.ReplaceData(new User_GuideParam
+            guideUI.ReplaceData(new PNL_GuideParam
             {
                 guideIDX = 1,
                 goods = StorageUnit.Instance.guideTempGoodsList[2]
@@ -132,7 +132,7 @@ public class GamePlay : Singleton<GamePlay>, IMsgObj
                 await handle.AsyncWait();
             }
 
-            guideUI = await UIManager.OpenUIAsync<User_Guide>(new User_GuideParam
+            guideUI = await UIManager.OpenUIAsync<PNL_Guide>(new PNL_GuideParam
             {
                 guideIDX = 2,
             });
@@ -144,7 +144,7 @@ public class GamePlay : Singleton<GamePlay>, IMsgObj
 
             if (AppExcuteFlagSettings.ToBFlag)
             {
-                guideUI.ReplaceData(new User_GuideParam { guideIDX = 3 });
+                guideUI.ReplaceData(new PNL_GuideParam { guideIDX = 3 });
                 await guideUI.WaitInteraction();
             }
             await guideUI.AsyncClose();

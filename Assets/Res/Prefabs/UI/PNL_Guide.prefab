@@ -4526,7 +4526,7 @@ GameObject:
   - component: {fileID: 2937601656266995193}
   - component: {fileID: 7340140420359326100}
   m_Layer: 5
-  m_Name: User_Guide
+  m_Name: PNL_Guide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

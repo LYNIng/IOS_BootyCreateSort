@@ -10,7 +10,7 @@ using TMPro;
 /// <summary>
 /// User_Guide
 /// </summary>
-public partial class User_Guide : UIBase<User_GuideParam>
+public partial class PNL_Guide : UIBase<PNL_GuideParam>
 {
 
     public const string UIName = "User_Guide";

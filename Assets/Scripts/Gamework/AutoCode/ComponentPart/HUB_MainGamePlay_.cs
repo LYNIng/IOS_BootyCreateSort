@@ -1,5 +1,5 @@
 ﻿//===================================================
-// 创建时间：2025-12-31 14:11:54
+// 创建时间：2026-01-06 14:53:20
 // 备    注：此代码为工具生成 请勿手工修改
 //===================================================
 
@@ -34,5 +34,10 @@ public partial class HUB_MainGamePlay : UIBase
     /// 
     /// </summary>
     public Button btnRefresh;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Button btnADFREE;
 
 }

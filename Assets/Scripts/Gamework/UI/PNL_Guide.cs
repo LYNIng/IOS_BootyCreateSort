@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class User_GuideParam : UIData
+public class PNL_GuideParam : UIData
 {
     public int guideIDX;
     public Vector3 pos;
@@ -14,7 +14,7 @@ public class User_GuideParam : UIData
 }
 
 [UISetting(UICanvasLayer.Overlay_Camera, backgroundMask: EBackgroundMask.Transparency, UIGroupTag: EUIGroupTag.GamePop)]
-public partial class User_Guide : UIBase<User_GuideParam>
+public partial class PNL_Guide : UIBase<PNL_GuideParam>
 {
     protected override async Task Show_Internal()
     {
