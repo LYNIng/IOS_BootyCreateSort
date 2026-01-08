@@ -24,10 +24,10 @@ public class UIShineAnimator : BaseEffect
     public bool useInterval = false;
 
     // 材质属性ID
-    private static readonly int ShineColorId = Shader.PropertyToID("_ShineColor");
-    private static readonly int ShineLocationId = Shader.PropertyToID("_ShineLocation");
+    public static readonly int ShineColorId = Shader.PropertyToID("_ShineColor");
+    public static readonly int ShineLocationId = Shader.PropertyToID("_ShineLocation");
 
-    private Material shineMaterial;
+    public Material shineMaterial { get; private set; }
     private Material originalMaterial;
     private Image targetImage;
 
@@ -88,7 +88,8 @@ public class UIShineAnimator : BaseEffect
         }
 
         // 重置位置并准备下一次随机
-        currentTween.AppendCallback(() => {
+        currentTween.AppendCallback(() =>
+        {
             if (shineMaterial != null)
             {
                 shineMaterial.SetFloat(ShineLocationId, startValue);

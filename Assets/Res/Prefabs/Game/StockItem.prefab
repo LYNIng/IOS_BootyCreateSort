@@ -211,8 +211,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imaIcon: {fileID: 3047253464295021817}
   layerIndex: 0
-  cabinetIndex: 0
-  itemIndex: 0
+  cabinetUnitIndex: 0
+  stockItemIndex: 0
   IsGroup: 0
   MaxGroupCount: 0
   startPointPos: 0

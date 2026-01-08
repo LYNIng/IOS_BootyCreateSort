@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -532,6 +533,28 @@ public static class TransformUtil
             switchSet?.Invoke(false);
             action?.Invoke(target);
         });
+    }
+    public static async Task AsyncClickScaleAni(this Transform target, Action<Transform> action, float durationScale = 1f, float intensity = 1f)
+    {
+        var comp = target.gameObject.GetOrAddComponent<ButtonEx>();
+        await target.AsyncClickScaleAni((setV) => comp.IsClicked = setV, () => comp.IsClicked, (target) => { action?.Invoke(target); }, durationScale, intensity);
+    }
+    public static async Task AsyncClickScaleAni(this Transform target, Action<bool> switchSet, Func<bool> switchGet, Action<Transform> action, float durationScale = 1f, float intensity = 1f)
+    {
+        var m_ClickAni = switchGet != null ? switchGet.Invoke() : false;
+        if (m_ClickAni) return;
+        switchSet.Invoke(true);
+
+        Sequence seq = DOTween.Sequence();
+        Vector3 orgScale = target.localScale;
+        float offset = 0.2f * intensity;
+        seq.Append(target.DOScale(Vector3.Scale(orgScale, new Vector3(1f + offset, 1f - offset, 1f)), 0.05f * durationScale).SetEase(Ease.InCubic).SetUpdate(true));
+        seq.Append(target.DOScale(Vector3.Scale(orgScale, new Vector3(1f - offset, 1f + offset, 1f)), 0.1f * durationScale).SetEase(Ease.InCubic).SetUpdate(true));
+        seq.Append(target.DOScale(orgScale, 0.05f * durationScale).SetEase(Ease.OutCubic).SetUpdate(true));
+
+        await seq.AsyncWaitForCompletion();
+        switchSet?.Invoke(false);
+        action?.Invoke(target);
     }
 
     public static void ClickRotateAni(this Transform target, Action<bool> switchSet, Func<bool> switchGet, Action<Transform> action, float durationScale = 1f, float strength = 1f)
@@ -1126,6 +1149,127 @@ public static class ColorUtil
     {
         return baseColor * intensity;
     }
+
+    public static string ToHex(this Color color, bool includeAlpha = true)
+    {
+        return ColorUtility.ToHtmlStringRGBA(color);
+    }
+
+    public static string ToHexRGB(this Color color)
+    {
+        return ColorUtility.ToHtmlStringRGB(color);
+    }
+
+    public static Color ToColor(this string hex)
+    {
+        if (string.IsNullOrEmpty(hex))
+            return Color.white;
+
+        if (!hex.StartsWith("#"))
+            hex = "#" + hex;
+
+        if (ColorUtility.TryParseHtmlString(hex, out Color color))
+            return color;
+
+        Debug.LogWarning($"Failed to parse hex color: {hex}");
+        return Color.white;
+    }
+
+    public static Color ToColor(this string hex, Color defaultColor)
+    {
+        if (string.IsNullOrEmpty(hex))
+            return defaultColor;
+
+        if (!hex.StartsWith("#"))
+            hex = "#" + hex;
+
+        if (ColorUtility.TryParseHtmlString(hex, out Color color))
+            return color;
+
+        return defaultColor;
+    }
+
+    // 支持的格式：
+    // #RGB, #RGBA, #RRGGBB, #RRGGBBAA
+    // rgb(255,255,255), rgba(255,255,255,1.0)
+    // hsl(360,100%,100%), hsla(360,100%,100%,1.0)
+
+    // 1. 自动检测并转换
+    public static Color ParseColor(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return Color.white;
+
+        input = input.Trim().ToLower();
+
+        // 十六进制格式
+        if (input.StartsWith("#") || IsHexString(input))
+        {
+            return ParseHexColor(input);
+        }
+        // RGB/RGBA格式
+        else if (input.StartsWith("rgb"))
+        {
+            return ParseRGBColor(input);
+        }
+        // HSL/HSLA格式
+        else if (input.StartsWith("hsl"))
+        {
+            return ParseHSLColor(input);
+        }
+        // 颜色名称（red, blue, etc）
+        else if (ColorUtility.TryParseHtmlString(input, out Color namedColor))
+        {
+            return namedColor;
+        }
+
+        Debug.LogWarning($"Unsupported color format: {input}");
+        return Color.white;
+    }
+
+    private static bool IsHexString(string input)
+    {
+        // 检查是否是有效的十六进制字符串
+        string hex = input.Replace("#", "");
+        return Regex.IsMatch(hex, @"^[0-9a-f]{3,8}$", RegexOptions.IgnoreCase);
+    }
+
+    private static Color ParseHexColor(string hex)
+    {
+        if (!hex.StartsWith("#"))
+            hex = "#" + hex;
+
+        if (ColorUtility.TryParseHtmlString(hex, out Color color))
+            return color;
+
+        return Color.white;
+    }
+
+    private static Color ParseRGBColor(string rgb)
+    {
+        // 解析 rgb(255,255,255) 或 rgba(255,255,255,1.0)
+        string pattern = @"rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)";
+        Match match = Regex.Match(rgb, pattern);
+
+        if (match.Success)
+        {
+            float r = int.Parse(match.Groups[1].Value) / 255f;
+            float g = int.Parse(match.Groups[2].Value) / 255f;
+            float b = int.Parse(match.Groups[3].Value) / 255f;
+            float a = match.Groups[4].Success ? float.Parse(match.Groups[4].Value) : 1f;
+
+            return new Color(r, g, b, a);
+        }
+
+        return Color.white;
+    }
+
+    private static Color ParseHSLColor(string hsl)
+    {
+        // HSL 转 RGB 转换（简化版）
+        Debug.LogWarning("HSL color conversion not fully implemented");
+        return Color.white;
+    }
 }
 
 public static class AnimationUtil
@@ -1219,6 +1363,65 @@ public static class AnimatorUtil
 
 }
 
+public static class TextUtil
+{
+    /// <summary>
+    /// 文本逐字显示效果
+    /// </summary>
+    /// <param name="textComponent">Text或TextMeshProUGUI组件</param>
+    /// <param name="targetText">目标文本</param>
+    /// <param name="duration">总持续时间</param>
+    public static Tweener DoText(this UnityEngine.UI.Text textComponent, string targetText, float duration)
+    {
+        textComponent.text = "";
+        StringBuilder currentText = new StringBuilder();
+
+        return DOTween.To(
+            () => 0,
+            value =>
+            {
+                int charCount = Mathf.FloorToInt(value);
+                currentText.Clear();
+
+                for (int i = 0; i < charCount && i < targetText.Length; i++)
+                {
+                    currentText.Append(targetText[i]);
+                }
+
+                textComponent.text = currentText.ToString();
+            },
+            targetText.Length,
+            duration
+        ).SetEase(Ease.Linear);
+    }
+
+    /// <summary>
+    /// TextMeshPro版本
+    /// </summary>
+    public static Tweener DoText(this TMPro.TextMeshProUGUI textComponent, string targetText, float duration)
+    {
+        textComponent.text = "";
+        StringBuilder currentText = new StringBuilder();
+
+        return DOTween.To(
+            () => 0,
+            value =>
+            {
+                int charCount = Mathf.FloorToInt(value);
+                currentText.Clear();
+
+                for (int i = 0; i < charCount && i < targetText.Length; i++)
+                {
+                    currentText.Append(targetText[i]);
+                }
+
+                textComponent.text = currentText.ToString();
+            },
+            targetText.Length,
+            duration
+        ).SetEase(Ease.Linear);
+    }
+}
 public interface IGameObjectPool
 {
     Task AsyncInit();

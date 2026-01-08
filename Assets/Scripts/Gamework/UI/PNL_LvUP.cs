@@ -10,7 +10,7 @@ public partial class PNL_LvUP : UIBase
     public override void OnInit()
     {
         base.OnInit();
-        txtLv.text = GlobalSingleton.Level.ToString();
+        txtLv.text = GlobalSingleton.LevelString;
     }
 
     protected override async Task Show_Internal()

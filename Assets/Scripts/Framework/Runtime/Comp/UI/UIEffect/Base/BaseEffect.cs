@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class BaseEffect : MonoBehaviour, IUIEffect
 {
     [Header("Base Effect Settings")]
-    public bool playOnStart = false;
+    public bool playOnStart = true;
     public bool waitForCompletion = true;
 
     [Header("Sequence Settings")]

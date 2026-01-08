@@ -157,7 +157,7 @@ public partial class GlobalSingleton : Singleton<GlobalSingleton>
     {
         get
         {
-            return DataManager.GetDataByInt("GuideState", 3);
+            return DataManager.GetDataByInt("GuideState", 0);
         }
         set
         {
@@ -508,67 +508,20 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
     private static Dictionary<string, Sprite> spritesDict;
     private AssetsLoader<Sprite> itemAssetsLoader;
 
-    //private static GameObjectPool layerGoPool;
-    //private static GameObjectPool cabinetGoPool;
-    //private static GameObjectPool goodsGoPool;
+    public static ParticlePool eliEffectPool;
+    public static ParticlePool UIFX_ParticleTrail_Feather;
+    public static ParticlePool UIPoof;
+    public static ParticlePool UIHitBar;
 
-    //public static ParticlePool trailParticlePool { get; private set; }
-    //public static ParticlePool eliminateParticlePool { get; private set; }
-    //public static ParticlePool hitBarParticlePool { get; private set; }
-
-
-    //public static async Task<GameObject> SpawnLayer()
-    //{
-    //    if (layerGoPool == null)
-    //    {
-    //        layerGoPool = new GameObjectPool("Prefabs/Game/OneFloor.prefab");
-    //        await layerGoPool.AsyncInit();
-    //    }
-    //    if (!layerGoPool.IsLoaded)
-    //        await layerGoPool.AsyncWaitLoaded();
-
-
-    //    return layerGoPool.Spawn();
-    //}
-
-    //public static async Task<GameObject> SpawnCabinet()
-    //{
-    //    if (cabinetGoPool == null)
-    //    {
-    //        cabinetGoPool = new GameObjectPool("Prefabs/Game/CabinetUnit.prefab");
-    //        await cabinetGoPool.AsyncInit();
-    //    }
-
-    //    if (!cabinetGoPool.IsLoaded)
-    //        await cabinetGoPool.AsyncWaitLoaded();
-
-    //    return cabinetGoPool.Spawn();
-
-    //}
-
-    //public static async Task<GameObject> SpawnGoods()
-    //{
-    //    if (goodsGoPool == null)
-    //    {
-    //        goodsGoPool = new GameObjectPool("Prefabs/Game/StockItem.prefab");
-    //        await goodsGoPool.AsyncInit();
-    //    }
-
-    //    if (!goodsGoPool.IsLoaded)
-    //        await goodsGoPool.AsyncWaitLoaded();
-
-    //    return goodsGoPool.Spawn();
-
-    //}
+    public static Material SuperCoinMate { get; private set; }
 
     public async Task<bool> AsyncInit()
     {
-        //layerGoPool = new GameObjectPool("Prefabs/Game/Layer.prefab");
-        //cabinetGoPool = new GameObjectPool("Prefabs/Game/Cabinet.prefab");
-        //goodsGoPool = new GameObjectPool("Prefabs/Game/Goods.prefab");
+        eliEffectPool = new ParticlePool("Prefabs/Particles/UISmooch.prefab");
+        UIFX_ParticleTrail_Feather = new ParticlePool("Prefabs/Particles/UIFX_ParticleTrail_Feather.prefab");
+        UIPoof = new ParticlePool("Prefabs/Particles/UIPoof.prefab");
+        UIHitBar = new ParticlePool("Prefabs/Particles/UIFeatherExplosion.prefab");
 
-        //trailParticlePool = new ParticlePool("Prefabs/Particles/FX_ParticleTrail_bubble.prefab");
-        //eliminateParticlePool = new ParticlePool("Prefabs/Particles/Icon_Boom.prefab");
         //hitBarParticlePool = new ParticlePool("Prefabs/Particles/UIP_StunExplosion.prefab");
 
         spritesDict = new Dictionary<string, Sprite>();
@@ -593,7 +546,6 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
         itemPaths.Add("Sprites/GameContents/tb-18.png");
         itemPaths.Add("Sprites/GameContents/tb-19.png");
         itemPaths.Add("Sprites/GameContents/tb-20.png");
-        //itemPaths.Add("Sprites/GameContents/tb-21.png");
         if (AppExcuteFlagSettings.ToBFlag)
             itemPaths.Add("Sprites/GameContents/tb-21.png");
 
@@ -604,6 +556,11 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
 
 
         itemAssetsLoader = new AssetsLoader<Sprite>(itemPaths.ToArray());
+
+        AssetsManager.LoadAsset<Material>("Materials/UIItem.mat", (resultMate) =>
+        {
+            SuperCoinMate = resultMate;
+        });
 
         await itemAssetsLoader.AsyncLoad();
 
@@ -635,138 +592,6 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
         }
         return false;
     }
-
-    //public async Task<GameObject> SpawnLayerGo()
-    //{
-    //    await Task.CompletedTask;
-    //    return layerGoPool.Spawn();
-    //}
-
-    //public async Task<GameObject> SpawnCabinetGo()
-    //{
-    //    await Task.CompletedTask;
-    //    return cabinetGoPool.Spawn();
-    //}
-
-    //public async Task<GameObject> SpawnGoodsGo()
-    //{
-    //    await Task.CompletedTask;
-    //    return goodsGoPool.Spawn();
-    //}
-
-    //public static bool TryGetSuperCoinClaim(out ParticlePool resultPool)
-    //{
-    //    resultPool = superCoinClaimEffect;
-    //    return resultPool != null;
-
-    //}
-
-    //public static GameObject GetBoxExpParticle(int i, Action<GameObject> onSet)
-    //{
-    //    if (boxExpDict.TryGetValue(i, out var particlePool))
-    //    {
-    //        return particlePool.Spawn(onSet: onSet);
-    //    }
-    //    return null;
-    //}
-
-    //private static async Task PreloadGameObjects(params string[] paths)
-    //{
-    //    List<Task> tasks = new List<Task>();
-    //    for (int i = 0; i < paths.Length; ++i)
-    //    {
-    //        var path = paths[i];
-    //        if (!_dict.TryGetValue(path, out GameObjectPool resultPool))
-    //        {
-    //            resultPool = new GameObjectPool(path, false);
-    //            resultPool.PoolParent = GlobalPartent;
-    //            _dict.Add(path, resultPool);
-
-    //            tasks.Add(resultPool.AsyncInit());
-
-    //        }
-    //    }
-    //    await Task.WhenAll(tasks);
-    //}
-
-    //private static Task PreloadGameObject
-
-    //public static async Task<GameObject> GetGameObject(string path)
-    //{
-    //    if (_dict.TryGetValue(path, out GameObjectPool resultPool))
-    //    {
-    //        if (!resultPool.IsInited)
-    //        {
-    //            await resultPool.AsyncInit();
-    //        }
-    //        else if (resultPool.IsInited && !resultPool.IsLoaded)
-    //        {
-    //            await resultPool.WaitLoaded();
-    //        }
-
-    //        return resultPool.Spawn();
-    //    }
-    //    else
-    //    {
-    //        resultPool = new GameObjectPool(path, false);
-    //        resultPool.PoolParent = GlobalPartent;
-    //        _dict.Add(path, resultPool);
-
-    //        await resultPool.AsyncInit();
-    //        return resultPool.Spawn();
-    //    }
-    //}
-
-    //public static void BackGameObject(string path, GameObject backGo)
-    //{
-    //    if (_dict.TryGetValue(path, out GameObjectPool resultPool))
-    //    {
-    //        resultPool.Back(backGo);
-    //    }
-    //    else
-    //    {
-    //        Destroy(backGo);
-    //    }
-    //}
-
-    //public static async Task<GameObject> SpawnBox(int boxLenght)
-    //{
-    //    var result = await GetGameObject($"Prefabs/Box/Box_{boxLenght}.prefab");
-    //    return result;
-    //}
-    //public static void DespawnBox(int boxLenght, GameObject backGo)
-    //{
-    //    BackGameObject($"Prefabs/Box/Box_{boxLenght}.prefab", backGo);
-    //}
-    //public static async Task<GameObject> SpawnFloor()
-    //{
-    //    var result = await GetGameObject($"Prefabs/Floor/Floor.prefab");
-    //    return result;
-    //}
-    //public static void DespawnFloor(GameObject backGo)
-    //{
-    //    BackGameObject($"Prefabs/Floor/Floor.prefab", backGo);
-    //}
-    //public static async Task<GameObject> SpawnItem(int itemIDX)
-    //{
-    //    var result = await GetGameObject($"Prefabs/Items/Item_{itemIDX}.prefab");
-    //    return result;
-    //}
-    //public static void DespawnItem(int itemIDX, GameObject backGo)
-    //{
-    //    BackGameObject($"Prefabs/Items/Item_{itemIDX}.prefab", backGo);
-    //}
-
-    //public static async Task<GameObject> SpawnGoods()
-    //{
-    //    var result = await GetGameObject("Prefabs/Goods/Goods.prefab");
-    //    return result;
-    //}
-
-    //public static void DespawnGoods(GameObject backGo)
-    //{
-    //    BackGameObject("Prefabs/Goods/Goods.prefab", backGo);
-    //}
 
 
 }

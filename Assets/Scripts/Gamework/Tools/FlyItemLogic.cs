@@ -85,7 +85,7 @@ public class FlyItemLogic
                 if (flyBoxTimer > timerLimit)
                 {
                     //UM.I.ReportEvent(UM.Module.GAME_FLY_SHOW);
-                    var go = Object.Instantiate(flyBoxPrefab, UIManager.GetCanvasLayerTransform(UICanvasLayer.Main_Camera));
+                    var go = Object.Instantiate(flyBoxPrefab, UIManager.GetCanvasLayerTransform(UICanvasLayer.Background_Camera));
                     flyBox = go.GetComponent<FlyItem>();
                     flyBox.SetType(rewardType);
                     flyBox.onDestroy += () =>

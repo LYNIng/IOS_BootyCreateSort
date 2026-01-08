@@ -103,7 +103,7 @@ public class StockItem : MonoBehaviour
     }
 
     // 设置商品
-    public void SetItemType(int itemType)
+    public void SetIconType(int itemType)
     {
         setted = true;
         if (ItemTypesArr.Count == 0)
@@ -127,8 +127,7 @@ public class StockItem : MonoBehaviour
 
         if (ItemType == GlobalSingleton.CaItemType())
         {
-            //var psComp = gameObject.GetOrAddComponent<LoopPlayParticle>();
-            //psComp.enabled = true;
+            PlaySuperCoinIconEffect();
         }
 
         RefreshName();
@@ -149,7 +148,7 @@ public class StockItem : MonoBehaviour
         RefreshIconImage();
     }
 
-    public void AddItemType(int itemType)
+    public void AddIconType(int itemType)
     {
         ItemType = itemType;
         RefreshIconImage();
@@ -165,13 +164,12 @@ public class StockItem : MonoBehaviour
 
         if (ItemType == GlobalSingleton.CaItemType())
         {
-            //var psComp = gameObject.GetOrAddComponent<LoopPlayParticle>();
-            //psComp.enabled = true;
+            PlaySuperCoinIconEffect();
         }
         RefreshName();
     }
 
-    public void SetItemTypes(IEnumerable<int> itemTypeArr)
+    public void SetIconTypes(IEnumerable<int> itemTypeArr)
     {
         ItemTypesArr.AddRange(itemTypeArr);
 
@@ -185,8 +183,7 @@ public class StockItem : MonoBehaviour
 
         if (ItemType == GlobalSingleton.CaItemType())
         {
-            //var psComp = gameObject.GetOrAddComponent<LoopPlayParticle>();
-            //psComp.enabled = true;
+            PlaySuperCoinIconEffect();
         }
         RefreshName();
     }
@@ -209,7 +206,7 @@ public class StockItem : MonoBehaviour
         return new Vector3(x, botOffset, 0);
     }
 
-    public StockItem PopGoods()
+    public StockItem PopItem()
     {
         if (ItemCount == 1)
         {
@@ -228,24 +225,46 @@ public class StockItem : MonoBehaviour
             item.IsGroup = IsGroup;
             item.stockItemPrefab = stockItemPrefab;
 
-            item.SetItemType(ItemType);
+            item.SetIconType(ItemType);
             ItemType = -1;
 
             if (GlobalAssetSingleton.Instance.TryGetSprite(ItemType, out var resultSp))
             {
                 gameObject.SetActive(true);
                 imaIcon.sprite = resultSp;
+
             }
 
             if (ItemType == GlobalSingleton.CaItemType())
             {
-                //var psComp = gameObject.GetOrAddComponent<LoopPlayParticle>();
-                //psComp.enabled = true;
+                PlaySuperCoinIconEffect();
             }
+            else
+                ResetIconEffect();
 
             item.RefreshName();
 
             return item;
+        }
+    }
+    private readonly static Color shineColor = "E0D838".ToColor();
+    private void PlaySuperCoinIconEffect()
+    {
+        imaIcon.material = GlobalAssetSingleton.SuperCoinMate;
+        var anim = imaIcon.GetOrAddComponent<UIShineAnimator>();
+        anim.shineColor = shineColor;
+        anim.effectDuration = 2f;
+        anim.SetRandomInterval(true);
+        anim.SetRandomStartDelay(true);
+        anim.enabled = true;
+    }
+
+    private void ResetIconEffect()
+    {
+        imaIcon.material = imaIcon.defaultMaterial;
+        if (imaIcon.TryGetComponent<UIShineAnimator>(out var comp))
+        {
+            comp.enabled = false;
         }
     }
 }

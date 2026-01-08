@@ -9,7 +9,7 @@ public partial class PNL_Gameover : UIBase
     {
         base.OnInit();
 
-        txtLv.text = GlobalSingleton.Level.ToString();
+        txtLv.text = GlobalSingleton.LevelString;
     }
 
     protected override void OnShowed()

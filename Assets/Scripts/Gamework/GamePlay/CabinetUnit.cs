@@ -137,12 +137,12 @@ public class CabinetUnit : MonoBehaviour
             {
                 if (recordParmas.isGroup)
                 {
-                    item.AddItemType(recordParmas.ItemType);
+                    item.AddIconType(recordParmas.ItemType);
                     OnGroupItemPop();
                 }
                 else
                 {
-                    item.SetItemType(recordParmas.ItemType);
+                    item.SetIconType(recordParmas.ItemType);
                 }
             }
         }

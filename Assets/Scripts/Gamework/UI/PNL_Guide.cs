@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,7 @@ public partial class PNL_Guide : UIBase<PNL_GuideParam>
     {
         await ShowGuide(Data.guideIDX);
     }
-
+    int step1Cnt = 0;
     Transform guideTrans = null;
     public async Task ShowGuide(int index)
     {
@@ -73,6 +74,17 @@ public partial class PNL_Guide : UIBase<PNL_GuideParam>
             if (GlobalAssetSingleton.Instance.TryGetSprite(Data.goods.ItemType, out Sprite result))
             {
                 imaIcon.GetComponent<Image>().sprite = result;
+                if (step1Cnt == 1)
+                {
+                    GuideItem1.sprite = result;
+                    GuideItem1.gameObject.SetActive(true);
+                }
+                else if (step1Cnt == 2)
+                {
+                    GuideItem2.sprite = result;
+                    GuideItem2.gameObject.SetActive(true);
+                }
+                step1Cnt++;
             }
 
             frame.transform.position = new Vector3(frame.transform.position.x, Data.goods.transform.position.y + 10f, frame.transform.position.z);
@@ -107,7 +119,8 @@ public partial class PNL_Guide : UIBase<PNL_GuideParam>
             //var newOne = loader.Asset.SpawnNewOne(guideTrans);
             //newOne.transform.localScale = Vector3.one;
             //newOne.transform.position = SuperCoinElement.Instance.transform.position;
-            transSuperCoinElement.transform.position = SuperCoinElement.Instance.transform.position;
+            TopSuperCoinPart.transform.position = SuperCoinElement.Instance.transform.position;
+            TopSuperCoinPart.Find("txtValue").GetComponent<TextMeshProUGUI>().text = GlobalSingleton.SuperCoin.ToPriceStr();
             btnCa.RegistBtnCallback(() =>
             {
                 AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);

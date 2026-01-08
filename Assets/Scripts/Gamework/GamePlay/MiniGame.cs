@@ -336,13 +336,13 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
             parent = user_GamePlay.GetCanvasLayerTransfrom();
         }
         seq.AppendCallback(() =>
-    {
-        //钞票效果
-        //var go = GlobalAssetSingleton.eliminateParticlePool.Spawn();
-        //go.transform.SetParent(parent);
-        //go.transform.position = startPos;
+        {
+            //钞票效果
+            var go = GlobalAssetSingleton.UIPoof.Spawn();
+            go.transform.SetParent(parent);
+            go.transform.position = startPos + new Vector3(0, 0.5f, 0);
 
-    });
+        });
 
         seq.AppendInterval(0.2f);
 
@@ -350,19 +350,16 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
         {
             if (playTrail)
             {
-
                 //飞行粒子效果
-                //    var tmp = GlobalAssetSingleton.trailParticlePool.Spawn(true, (resultGO) =>
-                //{
-                //    resultGO.SetActive(false);
-                //    resultGO.transform.SetParent(parent);
-                //    resultGO.transform.position = new Vector3(startPos.x, startPos.y, user_GamePlay.transform.position.z);
+                var tmp = GlobalAssetSingleton.UIFX_ParticleTrail_Feather.Spawn(true, (resultGO) =>
+                {
+                    resultGO.SetActive(false);
+                    resultGO.transform.SetParent(parent);
+                    resultGO.transform.position = new Vector3(startPos.x, startPos.y, user_GamePlay.transform.position.z);
 
-                //});
+                });
 
-
-
-                //    tmp.transform.DoSinLerpMove(user_GamePlay.fillAmount.transform.position, 1f, RandomHelp.RandomRange(-4, 4));
+                tmp.transform.DoSinLerpMove(user_GamePlay.fillAmount.transform.position, 1f, RandomHelp.RandomRange(-4, 4));
 
                 //Debug.Log($"startPos={startPos}, barPos={barLogic.amountPos}");
             }
@@ -372,16 +369,14 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
         {
             //飞行粒子击中效果
             AudioManager.AudioPlayer.PlayOneShot(SoundName.HitBar);
-            //var tmp = GlobalAssetSingleton.hitBarParticlePool.Spawn(true, onSet: (resutlGo) =>
-            //{
-            //    resutlGo.transform.SetParent(parent);
+            var tmp = GlobalAssetSingleton.UIHitBar.Spawn(true, onSet: (resutlGo) =>
+            {
+                resutlGo.transform.SetParent(parent);
+                resutlGo.transform.position = user_GamePlay.fillAmount.transform.position;
+                //tmp.transform.DoRandomLerpMove(comp.fillAmount.transform.position, 1f);
 
 
-            //    resutlGo.transform.position = user_GamePlay.fillAmount.transform.position;
-            //    //tmp.transform.DoRandomLerpMove(comp.fillAmount.transform.position, 1f);
-
-
-            //});
+            });
 
             this.SendCommand((ushort)GameEvent.RefreshProgressBar);
         });

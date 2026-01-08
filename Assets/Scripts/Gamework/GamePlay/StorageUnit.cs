@@ -136,7 +136,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
             for (int j = 0; j < item.MaxGroupCount; ++j)
             {
                 var t = insertItemTypeList[itemCount++];
-                item.AddItemType(t);
+                item.AddIconType(t);
             }
         }
 
@@ -145,9 +145,9 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         if (GlobalSingleton.GuideState == 1)
         {
             int guideItemType = AppExcuteFlagSettings.ToBFlag ? GlobalSingleton.CaItemType() : 1;
-            items[0].SetItemType(guideItemType);
-            items[1].SetItemType(guideItemType);
-            items[2].SetItemType(guideItemType);
+            items[0].SetIconType(guideItemType);
+            items[1].SetIconType(guideItemType);
+            items[2].SetIconType(guideItemType);
             guideTempGoodsList.Add(items[0]);
             guideTempGoodsList.Add(items[1]);
             guideTempGoodsList.Add(items[2]);
@@ -158,7 +158,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         for (int i = startCnt; i < items.Count; i++)
         {
             var t = insertItemTypeList[itemCount++];
-            items[i].SetItemType(t);
+            items[i].SetIconType(t);
         }
 
         //float y = transInvenTop.position.y - transInvenBottom.position.y;
@@ -379,7 +379,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
                 type = GlobalSingleton.CaItemType();
             }
 
-            item.SetItemType(type);
+            item.SetIconType(type);
         }
 
         //ClearEmptyFloor();
@@ -551,7 +551,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         }
         else
         {
-            var tmpGoods = goods.PopGoods();
+            var tmpGoods = goods.PopItem();
             var row = _layerList[goods.layerIndex];
             var shelf = row.GetBox(goods.cabinetUnitIndex);
             shelf.OnGroupItemPop();
@@ -689,7 +689,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
                     item.ReplaceItemArrType(tmpLs);
                 }
                 else
-                    item.SetItemType(item.ItemType);
+                    item.SetIconType(item.ItemType);
             }
         });
         seq.AppendInterval(0.55f);

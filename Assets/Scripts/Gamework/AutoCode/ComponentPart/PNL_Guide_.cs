@@ -1,5 +1,5 @@
 ﻿//===================================================
-// 创建时间：2025-12-23 10:22:32
+// 创建时间：2026-01-06 16:56:10
 // 备    注：此代码为工具生成 请勿手工修改
 //===================================================
 
@@ -8,12 +8,22 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// User_Guide
+/// PNL_Guide
 /// </summary>
 public partial class PNL_Guide : UIBase<PNL_GuideParam>
 {
 
-    public const string UIName = "User_Guide";
+    public const string UIName = "PNL_Guide";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Image GuideItem1;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Image GuideItem2;
 
     /// <summary>
     /// 
@@ -38,6 +48,16 @@ public partial class PNL_Guide : UIBase<PNL_GuideParam>
     /// <summary>
     /// 
     /// </summary>
-    public Transform transSuperCoinElement;
+    public TextMeshProUGUI txtPlusValue;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Transform TopSuperCoinPart;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public GameObject Effect;
 
 }

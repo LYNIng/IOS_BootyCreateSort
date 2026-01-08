@@ -19,6 +19,19 @@ public partial class HUB_MainGamePlay : UIBase, IMsgObj
         await PlayHide_ScaleMagnifyFadeOut();
     }
 
+    public override void OnInit()
+    {
+        base.OnInit();
+        RefreshADSkip();
+    }
+
+    [CmdCallback((ushort)GameEvent.RefreshADFREE)]
+    private void RefreshADSkip()
+    {
+        btnADFREE.gameObject.SetActive(!ShowADManager.IsSkipAD);
+    }
+
+
     protected override void OnShowed()
     {
         base.OnShowed();
@@ -62,6 +75,11 @@ public partial class HUB_MainGamePlay : UIBase, IMsgObj
             }
         });
 
+        btnADFREE.RegistBtnCallback(() =>
+        {
+            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+            UIManager.OpenUI<PNL_RemoveADs>();
+        });
         //btnTask.RegistBtnCallback(() =>
         //{
         //    AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
