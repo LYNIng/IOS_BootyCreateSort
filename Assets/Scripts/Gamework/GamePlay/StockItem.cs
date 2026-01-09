@@ -214,7 +214,7 @@ public class StockItem : MonoBehaviour
         return new Vector3(x, botOffset, 0);
     }
 
-    public StockItem PopItem()
+    public StockItem PopItem(int goodType)
     {
         if (ItemCount == 1)
         {
@@ -222,7 +222,7 @@ public class StockItem : MonoBehaviour
         }
         else
         {
-            var item = Instantiate(stockItemPrefab, transform, false);
+            var item = Instantiate(stockItemPrefab, transform.parent, false);
             item.layerIndex = layerIndex;
             item.cabinetUnitIndex = cabinetUnitIndex;
             item.startPointPos = startPointPos;
@@ -234,7 +234,22 @@ public class StockItem : MonoBehaviour
             item.stockItemPrefab = stockItemPrefab;
 
             item.SetIconType(ItemType);
-            ItemType = -1;
+            if (goodType == -1)
+            {
+                ItemType = -1;
+            }
+            else
+            {
+                for (int i = 0; i < ItemTypesArr.Count; ++i)
+                {
+                    var type = ItemTypesArr[i];
+                    if (goodType == type)
+                    {
+                        ItemTypesArr.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
 
             if (GlobalAssetSingleton.Instance.TryGetSprite(ItemType, out var resultSp))
             {

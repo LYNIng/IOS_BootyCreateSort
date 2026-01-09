@@ -118,7 +118,12 @@ public class CabinetUnit : MonoBehaviour
     {
         foreach (var item in items)
         {
-            if (item.ItemType >= 0) return false;
+            if (item.ItemType >= 0)
+            {
+                Debug.Log($"{name} check Null  {item.name} -- {item.ItemType} return false");
+
+                return false;
+            }
         }
 
         return true;

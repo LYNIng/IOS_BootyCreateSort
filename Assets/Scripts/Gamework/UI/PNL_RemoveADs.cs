@@ -5,7 +5,8 @@ using UnityEngine;
 
 
 [UISetting(UICanvasLayer.Popup_Camera,
-    backgroundMask: EBackgroundMask.Black_80F | EBackgroundMask.CloseUIOnCancelClick | EBackgroundMask.CloseUIOnBackGroundClick)]
+    backgroundMask: EBackgroundMask.Black_80F | EBackgroundMask.CloseUIOnCancelClick | EBackgroundMask.CloseUIOnBackGroundClick,
+    UIGroupTag: EUIGroupTag.HomePage | EUIGroupTag.GamePop)]
 public partial class PNL_RemoveADs : UIBase
 {
 

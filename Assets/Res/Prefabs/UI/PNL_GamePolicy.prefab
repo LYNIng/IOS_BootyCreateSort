@@ -94,7 +94,7 @@ MonoBehaviour:
     vor, den Preis zu verfallen.\r\nDie Entscheidung \xFCber nicht erf\xFCllte Preise
     liegt in unserem alleinigen Ermessen."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -211510374770390252, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -377,7 +377,7 @@ MonoBehaviour:
     \u043D\u0430\u0448\u0435\u043C\u0443 \u0441\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u043E\u043C\u0443
     \u0443\u0441\u043C\u043E\u0442\u0440\u0435\u043D\u0438\u044E."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -211510374770390252, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -673,7 +673,7 @@ MonoBehaviour:
     da conta do vencedor), reservamo-nos o direito de perder o pr\xE9mio.\r\nA decis\xE3o
     sobre os pr\xE9mios n\xE3o cumpridos \xE9 tomada a nosso exclusivo crit\xE9rio."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -211510374770390252, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -999,9 +999,9 @@ RectTransform:
   m_Father: {fileID: 2195187848299741751}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.000015258789, y: 2300}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 497.18765, y: 0}
+  m_SizeDelta: {x: 994.3753, y: 2300}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3208324014550311026
 CanvasRenderer:
@@ -1291,7 +1291,7 @@ MonoBehaviour:
     \u7A0E\u91D1\u3068\u624B\u6570\u6599\r\n\u9069\u7528\u3055\u308C\u308B\u7A0E\u91D1\u3084\u9001\u91D1\u624B\u6570\u6599\u306F\u3001\u3059\u3079\u3066\u304A\u5BA2\u69D8\u306E\u8CAC\u4EFB\u3068\u306A\u308A\u307E\u3059\u3002\r\n\u30B2\u30FC\u30E0\u306F\u3001\u653F\u5E9C\u5F53\u5C40\u306E\u8981\u6C42\u306B\u5FDC\u3058\u3066\u3001\u652F\u6255\u3044\u304B\u3089\u91D1\u984D\u3092\u5DEE\u3057\u5F15\u304F\u6A29\u5229\u3092\u7559\u4FDD\u3057\u307E\u3059\u3002\r\n8.
     \u8CDE\u54C1\u306E\u5C65\u884C\u4E0D\u80FD\r\n\u52DD\u8005\u306E\u884C\u52D5\uFF08\u898F\u5B9A\u306E\u671F\u9593\u5185\u306B\u8CC7\u91D1\u3092\u5F15\u304D\u51FA\u305B\u306A\u304B\u3063\u305F\u3001\u52DD\u8005\u306E\u30A2\u30AB\u30A6\u30F3\u30C8\u304C\u524A\u9664\u3055\u308C\u305F\u306A\u3069\uFF09\u306B\u3088\u308A\u8CDE\u54C1\u3092\u5C65\u884C\u3067\u304D\u306A\u3044\u5834\u5408\u3001\u5F53\u793E\u306F\u8CDE\u54C1\u3092\u6CA1\u53CE\u3059\u308B\u6A29\u5229\u3092\u7559\u4FDD\u3057\u307E\u3059\u3002\r\n\u5C65\u884C\u3055\u308C\u306A\u304B\u3063\u305F\u8CDE\u54C1\u306B\u95A2\u3059\u308B\u6C7A\u5B9A\u306F\u3001\u5F53\u793E\u306E\u72EC\u81EA\u306E\u88C1\u91CF\u3067\u884C\u308F\u308C\u307E\u3059\u3002"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -211510374770390252, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1575,7 +1575,7 @@ MonoBehaviour:
     nous nous r\xE9servons le droit de renoncer au prix.\r\nLa d\xE9cision concernant
     les prix non remis est prise \xE0 notre seule discr\xE9tion."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -211510374770390252, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1751,7 +1751,7 @@ MonoBehaviour:
     \uC0C1\uD488\uC5D0 \uB300\uD55C \uACB0\uC815\uC740 \uB2F9\uC0AC\uC758 \uB2E8\uB3C5
     \uC7AC\uB7C9\uC5D0 \uB530\uB77C \uB0B4\uB824\uC9D1\uB2C8\uB2E4."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -211510374770390252, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1911,7 +1911,7 @@ MonoBehaviour:
     ganador), nos reservamos el derecho de perder el premio.\r\nLa decisi\xF3n sobre
     los premios no entregados se toma a nuestro exclusivo criterio."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -211510374770390252, guid: 0169b1aad811c324a8129dcaaaafbbb9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2031,7 +2031,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8446523087812744254}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
@@ -2045,7 +2045,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8446523087812744254}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
@@ -2057,9 +2057,9 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0

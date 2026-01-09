@@ -355,7 +355,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         // 添加n个空的Row
         var itemsVolume = GetGoodsItems().Count;
         var minVolume = GlobalSingleton.GetCanbinetMinLength();
-        var maxVolume = GlobalSingleton.GetCanbinetMinLength();
+        var maxVolume = GlobalSingleton.GetCanbinetMaxLength();
         for (var i = 0; i < needAddRowCount; i++)
         {
             var row = SpawnLayer();
@@ -381,7 +381,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
 
             item.SetIconType(type);
         }
-
+        InfiniteFloorCount += needAddRowCount;
         //ClearEmptyFloor();
         ClearEmptyLayer();
     }
@@ -517,7 +517,16 @@ public class StorageUnit : MonoSingleton<StorageUnit>
             {
                 foreach (var item in shelf.items)
                 {
-                    if (item.ItemType == goodsType)
+                    if (item.IsGroup)
+                    {
+                        for (int i = 0; i < item.ItemTypesArr.Count; ++i)
+                        {
+                            var t = item.ItemTypesArr[i];
+                            if (t == goodsType)
+                                return item;
+                        }
+                    }
+                    else if (item.ItemType == goodsType)
                     {
                         return item;
                     }
@@ -528,16 +537,18 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         return null;
     }
 
-    public CabinetUnit EliminateGoods(StockItem goods)
+    public CabinetUnit EliminateGoods(StockItem goods, int goodType)
     {
-        var box = CallRemoveGoods(goods);
+        if (goods == null) return null;
+        var result = CallRemoveGoods(goods, goodType);
         MiniGame.Instance.PlayEliminateEffect(goods.transform.position + new Vector3(0, 0.2f, 0));
-        Destroy(goods.gameObject);
-        return box.cabinet;
+
+        Destroy(result.goods.gameObject);
+        return result.cabinet;
     }
 
     // 移除商品
-    public (CabinetUnit cabinet, StockItem goods) CallRemoveGoods(StockItem goods)
+    public (CabinetUnit cabinet, StockItem goods) CallRemoveGoods(StockItem goods, int goodType = -1)
     {
         if (goods.ItemCount == 1)
         {
@@ -550,7 +561,7 @@ public class StorageUnit : MonoSingleton<StorageUnit>
         }
         else
         {
-            var tmpGoods = goods.PopItem();
+            var tmpGoods = goods.PopItem(goodType);
             var row = _layerList[goods.layerIndex];
             var shelf = row.GetBox(goods.cabinetUnitIndex);
             shelf.OnGroupItemPop();
@@ -688,7 +699,12 @@ public class StorageUnit : MonoSingleton<StorageUnit>
                     item.ReplaceItemArrType(tmpLs);
                 }
                 else
-                    item.SetIconType(item.ItemType);
+                {
+                    if (allItemID.TryPop(out var resultValue))
+                    {
+                        item.SetIconType(resultValue);
+                    }
+                }
             }
         });
         seq.AppendInterval(0.55f);

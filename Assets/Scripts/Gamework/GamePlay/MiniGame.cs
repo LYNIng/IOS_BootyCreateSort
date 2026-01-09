@@ -258,16 +258,18 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
         var goods2 = slots.GetGoodsByIDX(1);
         // 从仓库移除物体
         var floorGoods1 = storage.GetGoodsByGoodsType(goods.ItemType);
-        var shelf = storage.EliminateGoods(floorGoods1);
-        if (shelf.IsNull()) storage.RemoveBox(shelf);
+
+        var shelf = storage.EliminateGoods(floorGoods1, goods.ItemType);
+        if (shelf != null && shelf.IsNull()) storage.RemoveBox(shelf);
 
         if (goods2 == null || goods.ItemType != goods2.ItemType)
         {
-            var floorGoods2 = storage.GetGoodsByGoodsType(goods.ItemType);
-            shelf = storage.EliminateGoods(floorGoods2);
-            if (shelf.IsNull()) storage.RemoveBox(shelf);
-
             slots.EliminateGoods(new List<StockItem> { goods });
+
+            var floorGoods2 = storage.GetGoodsByGoodsType(goods.ItemType);
+            shelf = storage.EliminateGoods(floorGoods2, goods.ItemType);
+            if (shelf != null && shelf.IsNull()) storage.RemoveBox(shelf);
+
         }
         else if (goods2 != null && goods.ItemType == goods2.ItemType)
         {
@@ -417,6 +419,15 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
             if (flyLogic != null)
                 flyLogic.Update();
 
+        }
+    }
+
+    private void OnDisable()
+    {
+        if(flyLogic != null)
+        {
+            flyLogic.Destroy();
+            flyLogic = null;
         }
     }
 
