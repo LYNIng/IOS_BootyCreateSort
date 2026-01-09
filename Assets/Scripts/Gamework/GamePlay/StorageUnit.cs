@@ -414,13 +414,12 @@ public class StorageUnit : MonoSingleton<StorageUnit>
     // 删除Shelf，后续会触发Row元素排序
     public void RemoveBox(CabinetUnit targetBox)
     {
+        //TODO 箱子炸裂特效
+        targetBox.PlayBoxBoomEffect();
+
         var row = _layerList[targetBox.oneLayerIndex];
         row.RemoveBox(targetBox);
 
-        //TODO 箱子炸裂特效
-        //ShelfGameContent.Inst.PlayBoxEffect(targetBox.transform.position +
-        //           new Vector3(targetBox.rectTransform.rect.width / 400,
-        //               targetBox.rectTransform.rect.height / 400, 0));
         AudioManager.AudioPlayer.PlayOneShot(SoundName.BoxElimination);
         Destroy(targetBox.gameObject);
 

@@ -150,7 +150,8 @@ public class GamePlay : Singleton<GamePlay>, IMsgObj
             await guideUI.AsyncClose();
             GlobalSingleton.GuideState = 2;
         }
-        //await GamePlay_ShelfGame.Instance.StartGameLevel();
+
+        MiniGame.Instance.StartGameLevel();
     }
 
     [CmdCallback((ushort)GameEvent.GamePlay_BackHome)]

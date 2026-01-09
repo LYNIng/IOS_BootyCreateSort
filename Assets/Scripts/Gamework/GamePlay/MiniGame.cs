@@ -9,6 +9,8 @@ using UnityEngine;
 
 public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
 {
+    public AdvancedBuoyancy advancedBuoyancy;
+
     public override bool DontDestory => false;
     [SerializeField]
     private StorageUnit storage;
@@ -53,6 +55,11 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
             flyLogic = new FlyItemLogic("Prefabs/UIComp/FlyItem.prefab");
         }
         isOver = false;
+    }
+
+    public void StartGameLevel()
+    {
+        advancedBuoyancy.enabled = true;
     }
 
 
@@ -390,9 +397,9 @@ public class MiniGame : MonoSingleton<MiniGame>, IMsgObj
 
     public void PlayBoxEffect(Vector3 pos)
     {
-        //var go = boxParticle.Get();
-        //go.transform.SetParent(transform);
-        //go.transform.position = pos;
+        var go = GlobalAssetSingleton.UIBox_Boom.Spawn();
+        go.transform.SetParent(transform);
+        go.transform.position = pos;
     }
     float timer = 0;
     private void Update()

@@ -179,4 +179,9 @@ public class CabinetUnit : MonoBehaviour
         var cellWidth = _floorWidth / RowCapacity;
         return new Vector2(cellWidth * cabinetUnitCount, shelfHeight);
     }
+
+    public void PlayBoxBoomEffect()
+    {
+        MiniGame.Instance.PlayBoxEffect(imaBackGround.transform.position);
+    }
 }

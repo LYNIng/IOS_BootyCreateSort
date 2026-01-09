@@ -24,35 +24,39 @@ public partial class PNL_MainPage : UIBase, IMsgObj
 
     protected override void OnShowed()
     {
-        btnPlay.RegistBtnCallback(() =>
+        if (GlobalSingleton.GuideState != 0)
         {
-            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            this.SendCommand((ushort)GameEvent.GamePlay_Begin);
-        });
+            btnPlay.RegistBtnCallback(() =>
+            {
+                AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+                this.SendCommand((ushort)GameEvent.GamePlay_Begin);
+            });
 
-        btnSignin.RegistBtnCallback(() =>
-        {
-            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            UIManager.OpenUI<PNL_Signin>();
-        });
+            btnSignin.RegistBtnCallback(() =>
+            {
+                AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+                UIManager.OpenUI<PNL_Signin>();
+            });
 
-        btnShop.RegistBtnCallback(() =>
-        {
-            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            UIManager.OpenUI<PNL_OpenShop>();
-        });
+            btnShop.RegistBtnCallback(() =>
+            {
+                AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+                UIManager.OpenUI<PNL_OpenShop>();
+            });
 
-        btnSettings.RegistBtnCallback(() =>
-        {
-            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            UIManager.OpenUI<PNL_Settings>();
-        });
+            btnSettings.RegistBtnCallback(() =>
+            {
+                AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+                UIManager.OpenUI<PNL_Settings>();
+            });
 
-        btnADFREE.RegistBtnCallback(() =>
-        {
-            AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
-            UIManager.OpenUI<PNL_RemoveADs>();
-        });
+            btnADFREE.RegistBtnCallback(() =>
+            {
+                AudioManager.AudioPlayer.PlayOneShot(SoundName.UIClick);
+                UIManager.OpenUI<PNL_RemoveADs>();
+            });
+
+        }
     }
     [CmdCallback((ushort)GameEvent.RefreshADFREE)]
     private void RefreshADFREE()

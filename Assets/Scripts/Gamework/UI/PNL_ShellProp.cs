@@ -84,13 +84,13 @@ public partial class PNL_ShellProp : UIBase<PNL_ShellPropParam>
         imaTool3.gameObject.SetActive(false);
         switch (Data.gameAssetType)
         {
-            case GameAssetType.RemoveTool:
-                imaTool1.gameObject.SetActive(true);
-                txtDec.text = 1006.ToMultiLanguageText();
-                break;
             case GameAssetType.BackTool:
-                imaTool2.gameObject.SetActive(true);
+                imaTool1.gameObject.SetActive(true);
                 txtDec.text = 1007.ToMultiLanguageText();
+                break;
+            case GameAssetType.RemoveTool:
+                imaTool2.gameObject.SetActive(true);
+                txtDec.text = 1006.ToMultiLanguageText();
                 break;
             case GameAssetType.RefreshTool:
                 imaTool3.gameObject.SetActive(true);

@@ -363,8 +363,6 @@ public partial class GlobalSingleton : Singleton<GlobalSingleton>
 
     #region Reward
 
-    //private static AssetLoader<Sprite> homeCoinIcon;
-
     public static void GetReward(GameAssetType gameAsset, int value, Vector3? startPos = null)
     {
         Debug.Log($"onGetReward {gameAsset} - {value}");
@@ -512,6 +510,7 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
     public static ParticlePool UIFX_ParticleTrail_Feather;
     public static ParticlePool UIPoof;
     public static ParticlePool UIHitBar;
+    public static ParticlePool UIBox_Boom;
 
     public static Material SuperCoinMate { get; private set; }
 
@@ -521,6 +520,9 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
         UIFX_ParticleTrail_Feather = new ParticlePool("Prefabs/Particles/UIFX_ParticleTrail_Feather.prefab");
         UIPoof = new ParticlePool("Prefabs/Particles/UIPoof.prefab");
         UIHitBar = new ParticlePool("Prefabs/Particles/UIFeatherExplosion.prefab");
+
+        UIBox_Boom = new ParticlePool("Prefabs/Particles/UIBox_Boom.prefab");
+
 
         //hitBarParticlePool = new ParticlePool("Prefabs/Particles/UIP_StunExplosion.prefab");
 
@@ -563,8 +565,6 @@ public partial class GlobalAssetSingleton : MonoSingleton<GlobalAssetSingleton>,
         });
 
         await itemAssetsLoader.AsyncLoad();
-
-
 
         foreach (var item in itemAssetsLoader.Handle.Result)
         {

@@ -129,6 +129,10 @@ public class StockItem : MonoBehaviour
         {
             PlaySuperCoinIconEffect();
         }
+        else
+        {
+            ResetIconEffect();
+        }
 
         RefreshName();
     }
@@ -165,6 +169,10 @@ public class StockItem : MonoBehaviour
         if (ItemType == GlobalSingleton.CaItemType())
         {
             PlaySuperCoinIconEffect();
+        }
+        else
+        {
+            ResetIconEffect();
         }
         RefreshName();
     }
